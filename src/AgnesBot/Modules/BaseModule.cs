@@ -1,6 +1,6 @@
 using Meebey.SmartIrc4net;
 
-namespace AgnesBot.Core
+namespace AgnesBot.Modules
 {
     public abstract class BaseModule
     {

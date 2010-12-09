@@ -58,9 +58,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\AgnesBotRunner.cs" />
+    <Compile Include="AgnesBotRunner.cs" />
     <Compile Include="Core\ConfigurationManager.cs" />
-    <Compile Include="Core\BaseModule.cs" />
+    <Compile Include="Modules\BaseModule.cs" />
     <Compile Include="Core\IoC.cs" />
     <Compile Include="Modules\TimeModule.cs" />
     <Compile Include="Program.cs" />

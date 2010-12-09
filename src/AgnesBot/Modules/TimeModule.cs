@@ -1,5 +1,4 @@
 using System;
-using AgnesBot.Core;
 using Meebey.SmartIrc4net;
 
 namespace AgnesBot.Modules

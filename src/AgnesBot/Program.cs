@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using AgnesBot.Core;
+using AgnesBot.Modules;
 using Autofac;
 using Meebey.SmartIrc4net;
 

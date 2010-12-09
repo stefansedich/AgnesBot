@@ -1,8 +1,10 @@
 ﻿using System;
+using AgnesBot.Core;
+using AgnesBot.Modules;
 using Meebey.SmartIrc4net;
 using System.Collections.Generic;
 
-namespace AgnesBot.Core
+namespace AgnesBot
 {
     public class AgnesBotRunner
     {
