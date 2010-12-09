@@ -8,7 +8,7 @@ namespace AgnesBot.Modules
     {
         public TimeAndDateModule()
         {
-            Handles(new TimeHandler());
+            AddHandler(new TimeHandler());
         }
     }
 

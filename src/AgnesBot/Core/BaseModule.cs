@@ -16,7 +16,7 @@ namespace AgnesBot.Core
                 handler.Handle(data, client);
         }
 
-        protected void Handles(IHandler handler)
+        protected void AddHandler(IHandler handler)
         {
             _handlers.Add(handler);
         }
