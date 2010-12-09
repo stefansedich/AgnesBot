@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -10,13 +9,20 @@ namespace AgnesBot.Core
 {
     public class AgnesBotRunner
     {
-        private readonly List<IModule> _modules = new List<IModule>();
+        private Configuration _configuration;
+        private readonly List<BaseModule> _modules = new List<BaseModule>();
         private readonly IrcClient _irc = new IrcClient();
 
         public void Start()
         {
+            LoadConfiguration();
             LoadModules();
             ConnectToServer();
+        }
+
+        private void LoadConfiguration()
+        {
+            _configuration = new Configuration();
         }
 
         private void LoadModules()
@@ -28,8 +34,8 @@ namespace AgnesBot.Core
                 .Concat(new List<Assembly> {Assembly.GetExecutingAssembly()});
 
             var types = assemblies.SelectMany(x => x.GetTypes())
-                .Where(type => type.GetInterfaces().Any(intface => typeof(IModule).IsAssignableFrom(type)))
-                .Select(type => (IModule) Activator.CreateInstance(type));
+                .Where(type => typeof(BaseModule).IsAssignableFrom(type) && !type.IsAbstract)
+                .Select(type => (BaseModule) Activator.CreateInstance(type));
 
             _modules.AddRange(types);
         }
@@ -40,22 +46,18 @@ namespace AgnesBot.Core
             _irc.OnReadLine += OnReadLine;
             _irc.SendDelay = 500;
 
-            _irc.Connect(ConfigurationManager.AppSettings["Server"],
-                         Convert.ToInt32(ConfigurationManager.AppSettings["Port"]));
+            _irc.Connect(_configuration.Server, _configuration.Port);
         }
 
         void OnConnected(object sender, EventArgs e)
         {
-            _irc.Login(ConfigurationManager.AppSettings["Nickname"],
-                       ConfigurationManager.AppSettings["Hostname"],
-                       0,
-                       ConfigurationManager.AppSettings["Email"],
-                       String.Empty);
-
-            var channels = ConfigurationManager.AppSettings["Channels"].Split(';');
-
-            foreach(var channel in channels)
-                _irc.RfcJoin(channel);
+            _irc.Login(_configuration.Nickname, _configuration.Hostname, 0, _configuration.Email, String.Empty);
+            
+            if(_configuration.AutoJoin)
+            {
+                foreach (var channel in _configuration.Channels)
+                    _irc.RfcJoin(channel);
+            }
             
             _irc.Listen();
         }
@@ -67,10 +69,7 @@ namespace AgnesBot.Core
             if (_irc.IsMe(data.Nick))
                 return;
 
-            var module = _modules.FirstOrDefault(x => x.CanHandle(data));
-
-            if (module != null)
-                module.Handle(data, _irc);
+            _modules.ForEach(module => module.Process(data, _irc));
         }
     }
 }

@@ -2,7 +2,7 @@ using Meebey.SmartIrc4net;
 
 namespace AgnesBot.Core
 {
-    public interface IModule
+    public interface IHandler
     {
         bool CanHandle(IrcMessageData data);
         void Handle(IrcMessageData data, IrcClient client);
