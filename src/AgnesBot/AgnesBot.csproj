@@ -59,11 +59,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\AgnesBotRunner.cs" />
-    <Compile Include="Core\BaseModule.cs" />
-    <Compile Include="Core\AgnesConfigurationManager.cs" />
+    <Compile Include="Core\ConfigurationManager.cs" />
     <Compile Include="Core\BaseHandler.cs" />
     <Compile Include="Core\IoC.cs" />
-    <Compile Include="Modules\TimeAndDateModule.cs" />
+    <Compile Include="MessageHandlers\TimeMessageHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

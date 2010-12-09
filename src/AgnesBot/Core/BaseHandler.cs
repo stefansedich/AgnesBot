@@ -4,9 +4,9 @@ namespace AgnesBot.Core
 {
     public abstract class BaseHandler
     {
-        protected readonly IrcClient Client;
         protected ReceiveType HandlesType { get; set; }
         protected string HandlesText { get; set; }
+        protected readonly IrcClient Client;
 
         protected BaseHandler(IrcClient client)
         {

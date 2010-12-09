@@ -2,16 +2,8 @@ using System;
 using AgnesBot.Core;
 using Meebey.SmartIrc4net;
 
-namespace AgnesBot.Modules
+namespace AgnesBot.MessageHandlers
 {
-    public class TimeAndDateModule : BaseModule
-    {
-        public TimeAndDateModule()
-        {
-            AddHandler<TimeMessageHandler>();
-        }
-    }
-
     public class TimeMessageHandler : BaseHandler
     {
         public TimeMessageHandler(IrcClient client) : base(client) { }

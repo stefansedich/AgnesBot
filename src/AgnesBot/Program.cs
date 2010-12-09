@@ -48,11 +48,7 @@ namespace AgnesBot
             var assemblies = Directory.GetFiles(path, "*.dll")
                 .Select(assembly => Assembly.LoadFile(assembly))
                 .Concat(new List<Assembly> { Assembly.GetExecutingAssembly() });
-
-            builder.RegisterAssemblyTypes(assemblies.ToArray())
-                .Where(x => typeof (BaseModule).IsAssignableFrom(x) && !x.IsAbstract)
-                .AsSelf();
-
+            
             builder.RegisterAssemblyTypes(assemblies.ToArray())
                 .Where(x => typeof(BaseHandler).IsAssignableFrom(x) && !x.IsAbstract)
                 .AsSelf();
