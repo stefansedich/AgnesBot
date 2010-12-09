@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AgnesBot</RootNamespace>
     <AssemblyName>AgnesBot</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -32,6 +32,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -65,6 +66,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Meebey.SmartIrc4net.dll</HintPath>
     </Reference>
+    <Reference Include="Raven.Client.Lightweight-3.5">
+      <HintPath>..\..\lib\Raven.Client.Lightweight-3.5.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -80,10 +84,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AgnesBotRunner.cs" />
+    <Compile Include="BotRunner.cs" />
     <Compile Include="Core\ConfigurationManager.cs" />
+    <Compile Include="Core\IrcConnection.cs" />
+    <Compile Include="Core\IrcMessage.cs" />
+    <Compile Include="Core\SystemTime.cs" />
     <Compile Include="Modules\BaseModule.cs" />
     <Compile Include="Core\IoC.cs" />
+    <Compile Include="Modules\CommentModule.cs" />
     <Compile Include="Modules\TimeModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -104,6 +112,19 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AgnesBot.Domain\AgnesBot.Domain.csproj">
+      <Project>{0A407B9F-15E1-4043-A4E0-79027AD30175}</Project>
+      <Name>AgnesBot.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AgnesBot.Repositories\AgnesBot.Repositories.csproj">
+      <Project>{DD575818-5B1F-4B55-B1F2-5FCB4BEC6E77}</Project>
+      <Name>AgnesBot.Repositories</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

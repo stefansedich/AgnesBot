@@ -1,17 +1,16 @@
-using Meebey.SmartIrc4net;
+using AgnesBot.Core;
 
 namespace AgnesBot.Modules
 {
     public abstract class BaseModule
     {
-        protected readonly IrcClient Client;
+        protected readonly IIrcClient Client;
         
-        protected BaseModule(IrcClient client)
+        protected BaseModule(IIrcClient client)
         {
             Client = client;
         }
-
-        public abstract bool CanProcess(IrcMessageData data);
-        public abstract void Process(IrcMessageData data);
+        
+        public abstract void Process(IrcMessage message);
     }
 }

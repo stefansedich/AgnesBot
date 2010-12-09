@@ -44,3 +44,5 @@ _ReSharper*/
 
 # Office Temp Files
 ~$*
+/src/_UpgradeReport_Files/UpgradeReport.css
+/src/AgnesBot/app.config

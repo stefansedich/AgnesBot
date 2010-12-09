@@ -16,10 +16,5 @@ namespace AgnesBot.Core
         {
             return _container.Resolve<T>();
         }
-
-        public static object Resolve(Type type)
-        {
-            return _container.Resolve(type);
-        }
     }
 }

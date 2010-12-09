@@ -4,9 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using AgnesBot.Core;
+using AgnesBot.Domain.Interfaces;
 using AgnesBot.Modules;
+using AgnesBot.Repositories;
 using Autofac;
-using Meebey.SmartIrc4net;
+using Raven.Client.Document;
 
 namespace AgnesBot
 {
@@ -16,7 +18,7 @@ namespace AgnesBot
         {
             SetupContainer();
 
-            IoC.Resolve<AgnesBotRunner>().Start();
+            IoC.Resolve<BotRunner>().Start();
 
             Console.WriteLine("Press enter to exit...");
             Console.ReadKey();
@@ -30,16 +32,28 @@ namespace AgnesBot
                 .As<IConfigurationManager>()
                 .SingleInstance();
 
-            builder.RegisterType<AgnesBotRunner>()
+            builder.RegisterType<BotRunner>()
                 .SingleInstance();
 
             builder.RegisterType<IrcClient>()
+                .As<IIrcClient>()
                 .SingleInstance();
 
+            builder.RegisterType<CommentRepository>()
+                .As<ICommentRepository>();
+
+            RegisterRavenDBStore(builder);
             RegisterModulesAndHandlersInContainer(builder);
             
             var container = builder.Build();
             IoC.Initialize(container);
+        }
+
+        private static void RegisterRavenDBStore(ContainerBuilder builder)
+        {
+            var store = new DocumentStore { Url = "http://localhost:8080" };
+            store.Initialize();
+            builder.RegisterInstance(store);
         }
 
         private static void RegisterModulesAndHandlersInContainer(ContainerBuilder builder)
@@ -49,10 +63,10 @@ namespace AgnesBot
             var assemblies = Directory.GetFiles(path, "*.dll")
                 .Select(assembly => Assembly.LoadFile(assembly))
                 .Concat(new List<Assembly> { Assembly.GetExecutingAssembly() });
-            
+
             builder.RegisterAssemblyTypes(assemblies.ToArray())
-                .Where(x => typeof(BaseModule).IsAssignableFrom(x) && !x.IsAbstract)
-                .AsSelf();
+                .Where(x => typeof (BaseModule).IsAssignableFrom(x) && !x.IsAbstract)
+                .As<BaseModule>();
         }
     }
 }

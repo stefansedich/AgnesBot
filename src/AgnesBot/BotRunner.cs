@@ -6,12 +6,12 @@ using System.Collections.Generic;
 
 namespace AgnesBot
 {
-    public class AgnesBotRunner
+    public class BotRunner
     {
         private readonly IConfigurationManager _configurationManager;
-        private readonly IrcClient _client;
+        private readonly IIrcClient _client;
         
-        public AgnesBotRunner(IConfigurationManager configurationManager, IrcClient client)
+        public BotRunner(IConfigurationManager configurationManager, IIrcClient client)
         {
             _configurationManager = configurationManager;
             _client = client;
@@ -24,14 +24,13 @@ namespace AgnesBot
 
         private void ConnectToServer()
         {
-            _client.OnConnected += OnConnected;
-            _client.OnReadLine += OnReadLine;
-            _client.SendDelay = 500;
-
+            _client.OnConnected = () => OnConnected();
+            _client.OnReadLine = line => OnReadLine(line);
+            
             _client.Connect(_configurationManager.Server, _configurationManager.Port);
         }
 
-        void OnConnected(object sender, EventArgs e)
+        void OnConnected()
         {
             _client.Login(_configurationManager.Nickname, _configurationManager.Hostname, 0, _configurationManager.Email, String.Empty);
             
@@ -44,19 +43,15 @@ namespace AgnesBot
             _client.Listen();
         }
 
-        private void OnReadLine(object sender, ReadLineEventArgs e)
+        private void OnReadLine(string line)
         {
-            IrcMessageData data = _client.MessageParser(e.Line);
+            var message = _client.MessageParser(line);
 
-            if (_client.IsMe(data.Nick))
+            if (_client.IsMe(message.Nick))
                 return;
 
             foreach (var handler in IoC.Resolve<IEnumerable<BaseModule>>())
-            {
-                if(handler.CanProcess(data))
-                    handler.CanProcess(data);
-            }
-                
+                handler.Process(message);
         }
     }
 }

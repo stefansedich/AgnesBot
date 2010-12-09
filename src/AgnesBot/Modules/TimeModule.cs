@@ -1,21 +1,21 @@
-using System;
+using AgnesBot.Core;
 using Meebey.SmartIrc4net;
 
 namespace AgnesBot.Modules
 {
     public class TimeModule : BaseModule
     {
-        public TimeModule(IrcClient client) : base(client) { }
-
-        public override bool CanProcess(IrcMessageData data)
+        public TimeModule(IIrcClient client) : base(client) { }
+        
+        public override void Process(IrcMessage message)
         {
-            return data.Type == ReceiveType.ChannelMessage
-                   && data.Message.StartsWith("!time");
-        }
+            if (message.Type != ReceiveType.ChannelMessage)
+                return;
 
-        public override void Process(IrcMessageData data)
-        {
-            Client.SendMessage(SendType.Message, data.Channel, "Time: " + DateTime.Now);
+            if (message.MessageParts[0] != "!time")
+                return;
+
+            Client.SendMessage(SendType.Message, message.Channel, "The Time Is: " + SystemTime.Now());
         }
     }
 }
