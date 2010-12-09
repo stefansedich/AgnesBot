@@ -4,17 +4,17 @@ using Meebey.SmartIrc4net;
 
 namespace AgnesBot.MessageHandlers
 {
-    public class TimeMessageHandler : BaseHandler
+    public class TimeModule : BaseModule
     {
-        public TimeMessageHandler(IrcClient client) : base(client) { }
+        public TimeModule(IrcClient client) : base(client) { }
 
-        public override bool CanHandle(IrcMessageData data)
+        public override bool CanProcess(IrcMessageData data)
         {
             return data.Type == ReceiveType.ChannelMessage
                    && data.Message.StartsWith("!time");
         }
 
-        public override void Handle(IrcMessageData data)
+        public override void Process(IrcMessageData data)
         {
             Client.SendMessage(SendType.Message, data.Channel, "Time: " + DateTime.Now);
         }

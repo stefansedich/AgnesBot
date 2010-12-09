@@ -49,10 +49,10 @@ namespace AgnesBot.Core
             if (_client.IsMe(data.Nick))
                 return;
 
-            foreach (var handler in IoC.Resolve<IEnumerable<BaseHandler>>())
+            foreach (var handler in IoC.Resolve<IEnumerable<BaseModule>>())
             {
-                if(handler.CanHandle(data))
-                    handler.Handle(data);
+                if(handler.CanProcess(data))
+                    handler.CanProcess(data);
             }
                 
         }

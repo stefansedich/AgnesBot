@@ -50,7 +50,7 @@ namespace AgnesBot
                 .Concat(new List<Assembly> { Assembly.GetExecutingAssembly() });
             
             builder.RegisterAssemblyTypes(assemblies.ToArray())
-                .Where(x => typeof(BaseHandler).IsAssignableFrom(x) && !x.IsAbstract)
+                .Where(x => typeof(BaseModule).IsAssignableFrom(x) && !x.IsAbstract)
                 .AsSelf();
         }
     }
