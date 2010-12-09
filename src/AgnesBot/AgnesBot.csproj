@@ -53,7 +53,7 @@
     <Compile Include="Core\AgnesBotRunner.cs" />
     <Compile Include="Core\BaseModule.cs" />
     <Compile Include="Core\Configuration.cs" />
-    <Compile Include="Core\IHandler.cs" />
+    <Compile Include="Core\HandlerBase.cs" />
     <Compile Include="Modules\TimeAndDateModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

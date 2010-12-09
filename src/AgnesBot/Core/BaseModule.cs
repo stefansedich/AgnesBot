@@ -6,7 +6,7 @@ namespace AgnesBot.Core
 {
     public abstract class BaseModule
     {
-        private readonly IList<IHandler> _handlers = new List<IHandler>();
+        private readonly IList<HandlerBase> _handlers = new List<HandlerBase>();
 
         public void Process(IrcMessageData data, IrcClient client)
         {
@@ -16,7 +16,7 @@ namespace AgnesBot.Core
                 handler.Handle(data, client);
         }
 
-        protected void AddHandler(IHandler handler)
+        protected void AddHandler(HandlerBase handler)
         {
             _handlers.Add(handler);
         }

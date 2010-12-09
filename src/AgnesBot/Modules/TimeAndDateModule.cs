@@ -12,15 +12,15 @@ namespace AgnesBot.Modules
         }
     }
 
-    public class TimeMessageHandler : IHandler
+    public class TimeMessageHandler : HandlerBase
     {
-        public bool CanHandle(IrcMessageData data)
+        public TimeMessageHandler()
         {
-            return data.Type == ReceiveType.ChannelMessage 
-                   && data.MessageArray[0] == "!time";
+            Handles(ReceiveType.ChannelMessage)
+                .WithText("!time");
         }
 
-        public void Handle(IrcMessageData data, IrcClient client)
+        public override void Handle(IrcMessageData data, IrcClient client)
         {
             client.SendMessage(SendType.Message, data.Channel, "Time: " + DateTime.Now);
         }
