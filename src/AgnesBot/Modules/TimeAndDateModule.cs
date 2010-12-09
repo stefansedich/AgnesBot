@@ -8,11 +8,11 @@ namespace AgnesBot.Modules
     {
         public TimeAndDateModule()
         {
-            AddHandler(new TimeHandler());
+            AddHandler(new TimeMessageHandler());
         }
     }
 
-    public class TimeHandler : IHandler
+    public class TimeMessageHandler : IHandler
     {
         public bool CanHandle(IrcMessageData data)
         {
