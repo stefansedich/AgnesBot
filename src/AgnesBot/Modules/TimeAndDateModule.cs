@@ -14,10 +14,10 @@ namespace AgnesBot.Modules
 
     public class TimeMessageHandler : HandlerBase
     {
-        public TimeMessageHandler()
+        public override bool CanHandle(IrcMessageData data)
         {
-            Handles(ReceiveType.ChannelMessage)
-                .WithText("!time");
+            return data.Type == ReceiveType.ChannelMessage
+                   && data.Message.StartsWith("!time");
         }
 
         public override void Handle(IrcMessageData data, IrcClient client)
