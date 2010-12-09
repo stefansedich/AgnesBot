@@ -2,7 +2,7 @@ using System;
 using AgnesBot.Core;
 using Meebey.SmartIrc4net;
 
-namespace AgnesBot.MessageHandlers
+namespace AgnesBot.Modules
 {
     public class TimeModule : BaseModule
     {
