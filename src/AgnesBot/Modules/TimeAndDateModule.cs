@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using AgnesBot.Core;
 using Meebey.SmartIrc4net;
 
@@ -7,15 +6,9 @@ namespace AgnesBot.Modules
 {
     public class TimeAndDateModule : BaseModule
     {
-        public override IList<IHandler> Handlers
+        public TimeAndDateModule()
         {
-            get
-            {
-                return new List<IHandler>
-                           {
-                               new TimeHandler()
-                           };
-            }
+            Handles(new TimeHandler());
         }
     }
 

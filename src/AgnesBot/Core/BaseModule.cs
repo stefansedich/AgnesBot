@@ -6,14 +6,19 @@ namespace AgnesBot.Core
 {
     public abstract class BaseModule
     {
-        public abstract IList<IHandler> Handlers { get; }
+        private readonly IList<IHandler> _handlers = new List<IHandler>();
 
         public void Process(IrcMessageData data, IrcClient client)
         {
-            var handlers = Handlers.Where(handler => handler.CanHandle(data));
+            var handlers = _handlers.Where(handler => handler.CanHandle(data));
 
             foreach(var handler in handlers)
                 handler.Handle(data, client);
+        }
+
+        protected void Handles(IHandler handler)
+        {
+            _handlers.Add(handler);
         }
     }
 }
