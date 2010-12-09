@@ -1,75 +1,56 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 using Meebey.SmartIrc4net;
+using System.Collections.Generic;
 
 namespace AgnesBot.Core
 {
     public class AgnesBotRunner
     {
-        private Configuration _configuration;
-        private readonly List<BaseModule> _modules = new List<BaseModule>();
-        private readonly IrcClient _irc = new IrcClient();
+        private readonly IConfigurationManager _configurationManager;
+        private readonly IrcClient _client;
+        
+        public AgnesBotRunner(IConfigurationManager configurationManager, IrcClient client)
+        {
+            _configurationManager = configurationManager;
+            _client = client;
+        }
 
         public void Start()
         {
-            LoadConfiguration();
-            LoadModules();
             ConnectToServer();
-        }
-
-        private void LoadConfiguration()
-        {
-            _configuration = new Configuration();
-        }
-
-        private void LoadModules()
-        {
-            string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
-            var assemblies = Directory.GetFiles(path, "*.dll")
-                .Select(assembly => Assembly.LoadFile(assembly))
-                .Concat(new List<Assembly> {Assembly.GetExecutingAssembly()});
-
-            var types = assemblies.SelectMany(x => x.GetTypes())
-                .Where(type => typeof(BaseModule).IsAssignableFrom(type) && !type.IsAbstract)
-                .Select(type => (BaseModule) Activator.CreateInstance(type));
-
-            _modules.AddRange(types);
         }
 
         private void ConnectToServer()
         {
-            _irc.OnConnected += OnConnected;
-            _irc.OnReadLine += OnReadLine;
-            _irc.SendDelay = 500;
+            _client.OnConnected += OnConnected;
+            _client.OnReadLine += OnReadLine;
+            _client.SendDelay = 500;
 
-            _irc.Connect(_configuration.Server, _configuration.Port);
+            _client.Connect(_configurationManager.Server, _configurationManager.Port);
         }
 
         void OnConnected(object sender, EventArgs e)
         {
-            _irc.Login(_configuration.Nickname, _configuration.Hostname, 0, _configuration.Email, String.Empty);
+            _client.Login(_configurationManager.Nickname, _configurationManager.Hostname, 0, _configurationManager.Email, String.Empty);
             
-            if(_configuration.AutoJoin)
+            if(_configurationManager.AutoJoin)
             {
-                foreach (var channel in _configuration.Channels)
-                    _irc.RfcJoin(channel);
+                foreach (var channel in _configurationManager.Channels)
+                    _client.RfcJoin(channel);
             }
-            
-            _irc.Listen();
+
+            _client.Listen();
         }
 
         private void OnReadLine(object sender, ReadLineEventArgs e)
         {
-            IrcMessageData data = _irc.MessageParser(e.Line);
+            IrcMessageData data = _client.MessageParser(e.Line);
 
-            if (_irc.IsMe(data.Nick))
+            if (_client.IsMe(data.Nick))
                 return;
 
-            _modules.ForEach(module => module.Process(data, _irc));
+            foreach (var module in IoC.Resolve<IEnumerable<BaseModule>>())
+                module.Process(data);
         }
     }
 }

@@ -8,21 +8,23 @@ namespace AgnesBot.Modules
     {
         public TimeAndDateModule()
         {
-            AddHandler(new TimeMessageHandler());
+            AddHandler<TimeMessageHandler>();
         }
     }
 
-    public class TimeMessageHandler : HandlerBase
+    public class TimeMessageHandler : BaseHandler
     {
+        public TimeMessageHandler(IrcClient client) : base(client) { }
+
         public override bool CanHandle(IrcMessageData data)
         {
             return data.Type == ReceiveType.ChannelMessage
                    && data.Message.StartsWith("!time");
         }
 
-        public override void Handle(IrcMessageData data, IrcClient client)
+        public override void Handle(IrcMessageData data)
         {
-            client.SendMessage(SendType.Message, data.Channel, "Time: " + DateTime.Now);
+            Client.SendMessage(SendType.Message, data.Channel, "Time: " + DateTime.Now);
         }
     }
 }

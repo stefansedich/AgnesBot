@@ -31,6 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=2.3.2.632, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Configuration, Version=2.3.2.632, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Autofac.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="Meebey.SmartIrc4net, Version=0.4.0.37291, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Meebey.SmartIrc4net.dll</HintPath>
@@ -52,8 +60,9 @@
   <ItemGroup>
     <Compile Include="Core\AgnesBotRunner.cs" />
     <Compile Include="Core\BaseModule.cs" />
-    <Compile Include="Core\Configuration.cs" />
-    <Compile Include="Core\HandlerBase.cs" />
+    <Compile Include="Core\AgnesConfigurationManager.cs" />
+    <Compile Include="Core\BaseHandler.cs" />
+    <Compile Include="Core\IoC.cs" />
     <Compile Include="Modules\TimeAndDateModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

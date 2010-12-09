@@ -1,24 +1,26 @@
+using System;
 using System.Collections.Generic;
-using Meebey.SmartIrc4net;
 using System.Linq;
+using Meebey.SmartIrc4net;
 
 namespace AgnesBot.Core
 {
     public abstract class BaseModule
     {
-        private readonly IList<HandlerBase> _handlers = new List<HandlerBase>();
-
-        public void Process(IrcMessageData data, IrcClient client)
+        private readonly IList<Type> _handlers = new List<Type>();
+        
+        public void Process(IrcMessageData data)
         {
-            var handlers = _handlers.Where(handler => handler.CanHandle(data));
+            var handlers = _handlers.Select(type => (BaseHandler) IoC.Resolve(type))
+                .Where(handler => handler.CanHandle(data));
 
-            foreach(var handler in handlers)
-                handler.Handle(data, client);
+            foreach (var handler in handlers)
+                handler.Handle(data);
         }
 
-        protected void AddHandler(HandlerBase handler)
+        protected void AddHandler<THandler>()
         {
-            _handlers.Add(handler);
+            _handlers.Add(typeof(THandler));
         }
     }
 }
