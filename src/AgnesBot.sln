@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgnesBot.Modules.TinyUrlMod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgnesBot.Modules.TinyUrlModule.Tests", "AgnesBot.Modules.TinyUrlModule.Tests\AgnesBot.Modules.TinyUrlModule.Tests.csproj", "{25F5D918-8A19-47FB-B470-DCBA0EE10E9E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{3EE894D3-3394-43CE-B774-B6E9AF939A01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,5 +54,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{25F5D918-8A19-47FB-B470-DCBA0EE10E9E} = {3EE894D3-3394-43CE-B774-B6E9AF939A01}
+		{637F87D5-1934-4B18-923A-F8420D0EB648} = {3EE894D3-3394-43CE-B774-B6E9AF939A01}
+		{215AFE27-4EB4-40D1-A261-C8E0350697C6} = {3EE894D3-3394-43CE-B774-B6E9AF939A01}
+		{22914356-0706-4E84-BB4D-C37AC51E3B41} = {3EE894D3-3394-43CE-B774-B6E9AF939A01}
 	EndGlobalSection
 EndGlobal
