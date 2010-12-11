@@ -9,7 +9,7 @@ namespace AgnesBot.Modules.CommentModule
         {
             builder.RegisterType<CommentRepository>()
                 .As<ICommentRepository>()
-                .InstancePerDependency();
+                .SingleInstance();
         }
     }
 }
