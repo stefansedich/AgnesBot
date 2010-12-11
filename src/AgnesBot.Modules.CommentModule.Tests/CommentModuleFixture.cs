@@ -42,7 +42,7 @@ namespace AgnesBot.Modules.CommentModule.Tests
             // Arrange
             const string COMMENT = "testing 123";
 
-            var data = new IrcMessageData() { Message = "!comments add " + COMMENT };
+            var data = new IrcMessageData() { Message = "!comments add " + COMMENT, Type = ReceiveType.ChannelMessage };
 
             SystemTime.Now = () => new DateTime(2009, 1, 1);
 
@@ -73,22 +73,29 @@ namespace AgnesBot.Modules.CommentModule.Tests
         }
 
         [Test]
-        public void Comment_Search_Returns_Top_3_Results()
+        public void Can_Find_Comments()
         {
             // Arrange
             const string term = "abc";
 
-            var comment = new Comment {Text = "testing"};
-            var data = new IrcMessageData {Message = "!comments find " + term};
+            var comments = new List<Comment>
+                               {
+                                   new Comment {Text = "testing1"},
+                                   new Comment {Text = "testing2"},
+                                   new Comment {Text = "testing3"}
+                               };
+
+            var data = new IrcMessageData { Message = "!comments find " + term, Type = ReceiveType.ChannelMessage };
 
             _repository.Stub(repository => repository.SearchComments(term))
-                .Return(new List<Comment> { comment });
+                .Return(comments);
 
             // Act
             _module.Process(data);
 
             // Assert
-            _client.AssertWasCalled(client => client.SendMessage(SendType.Message, data.Channel, string.Format("{0} on {1}", comment.Text, comment.Timestamp)));
+            foreach(var comment in comments)
+                _client.AssertWasCalled(client => client.SendMessage(SendType.Message, data.Channel, string.Format("{0} on {1}", comment.Text, comment.Timestamp)));
         }
     }
 }

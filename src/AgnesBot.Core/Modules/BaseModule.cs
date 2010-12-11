@@ -1,34 +1,40 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text.RegularExpressions;
 using AgnesBot.Core.IrcUtils;
 
 namespace AgnesBot.Core.Modules
 {
     public abstract class BaseModule : IModule
     {
-        private readonly IList<KeyValuePair<Func<IrcMessageData, bool>, Action<IrcMessageData>>> _handlers;
+        private readonly IList<ModuleMessageHandler> _handlers = new List<ModuleMessageHandler>();
 
         protected readonly IIrcClient Client;
         
         protected BaseModule(IIrcClient client)
         {
             Client = client;
-
-            _handlers = new List<KeyValuePair<Func<IrcMessageData, bool>, Action<IrcMessageData>>>();
         }
         
-        public void AddHandler(Func<IrcMessageData, bool> predicate, Action<IrcMessageData> handler)
+        public void AddHandler(ModuleMessageHandler handler)
         {
-            _handlers.Add(new KeyValuePair<Func<IrcMessageData, bool>, Action<IrcMessageData>>(predicate, handler));
+            _handlers.Add(handler);
         }
 
         public void Process(IrcMessageData data)
         {
-            var handlers = _handlers.Where(handler => handler.Key(data));
+            foreach (var handler in _handlers)
+            {
+                if (handler.Type != data.Type)
+                    continue;
 
-            foreach (var handler in handlers)
-                handler.Value(data);
+                if(Regex.IsMatch(data.Message, handler.CommandRegex) == false)
+                    continue;
+                
+                data.MessageWithoutCommand = Regex.Replace(data.Message, handler.CommandRegex, string.Empty).Trim();
+
+                handler.Action(data);
+            }
+                
         }
     }
 }

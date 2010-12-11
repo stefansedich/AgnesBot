@@ -14,13 +14,29 @@ namespace AgnesBot.Modules.CommentModule
         {
             _commentRepository = commentRepository;
 
-            AddHandler(data => data.Message.StartsWith("!comments add"), AddComment);
-            AddHandler(data => data.Message.StartsWith("!comments find"), SearchComments);
+            AddHandler(
+                new ModuleMessageHandler
+                    {
+                        Type = ReceiveType.ChannelMessage,
+                        CommandRegex = "^!comments add",
+                        Action = AddComment
+
+                    }
+                );
+
+            AddHandler(
+                new ModuleMessageHandler
+                    {
+                        Type = ReceiveType.ChannelMessage,
+                        CommandRegex = "^!comments find",
+                        Action = SearchComments
+                    }
+                );
         }
         
         private void AddComment(IrcMessageData data)
         {
-            string text = data.Message.Substring(13).Trim();
+            string text = data.MessageWithoutCommand;
 
             if (string.IsNullOrEmpty(text))
                 return;
@@ -36,7 +52,7 @@ namespace AgnesBot.Modules.CommentModule
 
         public void SearchComments(IrcMessageData data)
         {
-            string text = data.Message.Substring(14).Trim();
+            string text = data.MessageWithoutCommand;
 
             if (string.IsNullOrEmpty(text))
                 return;

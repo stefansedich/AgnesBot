@@ -27,7 +27,7 @@ namespace AgnesBot.Modules.TinyUrlModule.Tests
             const string URL = "www.google.com";
             const string SHORTENED_URL = "a";
 
-            var data = new IrcMessageData {Message = "!tinyurl " + URL, Channel = "#test"};
+            var data = new IrcMessageData { Message = "!tinyurl " + URL, Channel = "#test", Type = ReceiveType.ChannelMessage };
 
             _tinyUrlService.Stub(service => service.ShortenUrl(URL))
                 .Return(SHORTENED_URL);

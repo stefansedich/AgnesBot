@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\BaseRepository.cs" />
+    <Compile Include="Modules\ModuleMessageHandler.cs" />
     <Compile Include="Utils\ConfigurationManager.cs" />
     <Compile Include="Utils\IoC.cs" />
     <Compile Include="IrcUtils\IrcClient.cs" />
