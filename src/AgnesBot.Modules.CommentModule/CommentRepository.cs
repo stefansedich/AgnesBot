@@ -2,14 +2,14 @@
 {
     public interface ICommentRepository
     {
-        void SaveComment(Comment comment);
+        void CreateComment(Comment comment);
     }
 
     public class CommentRepository : ICommentRepository
     {
         public CommentRepository() { }
 
-        public void SaveComment(Comment comment)
+        public void CreateComment(Comment comment)
         {
             
         }

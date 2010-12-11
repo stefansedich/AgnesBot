@@ -1,3 +1,4 @@
+using AgnesBot.Core;
 using AgnesBot.Core.Irc;
 using AgnesBot.Core.Modules;
 
@@ -16,7 +17,18 @@ namespace AgnesBot.Modules.CommentModule
         
         private void AddComment(IrcMessageData data)
         {
-            Client.SendMessage(SendType.Message, data.Channel, "Comment added");
+            string comment = data.Message.Substring(14).Trim();
+
+            if(string.IsNullOrEmpty(comment))
+                return;
+
+            _commentRepository.CreateComment(new Comment
+                                               {
+                                                   Text = comment,
+                                                   Timestamp = SystemTime.Now()
+                                               });
+
+            Client.SendMessage(SendType.Message, data.Channel, "Comment has been added.");
         }
     }
 }
