@@ -49,7 +49,7 @@ namespace AgnesBot.Server
             if (_client.IsMe(data.Nickname))
                 return;
 
-            foreach (var handler in IoC.Resolve<IEnumerable<IModule>>())
+            foreach (var handler in IoC.ResolveAll<IModule>())
                 handler.Process(data);
         }
     }

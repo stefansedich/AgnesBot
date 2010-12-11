@@ -1,16 +1,16 @@
-using AgnesBot.Core.Utils;
+using System;
 using AgnesBot.Modules.CommentModule.Domain;
-using Autofac;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.SubSystems.Configuration;
+using Castle.Windsor;
 
 namespace AgnesBot.Modules.CommentModule
 {
-    public class CommentModuleInstaller : IInstaller
+    public class CommentModuleInstaller : IWindsorInstaller
     {
-        public void Install(ContainerBuilder builder)
+        public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            builder.RegisterType<CommentRepository>()
-                .As<ICommentRepository>()
-                .SingleInstance();
+            container.Register(Component.For<ICommentRepository>().ImplementedBy<CommentRepository>());
         }
     }
 }

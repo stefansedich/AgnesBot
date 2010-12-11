@@ -4,8 +4,12 @@ using System.Linq;
 using System.Reflection;
 using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.Modules;
+using AgnesBot.Core.UnitOfWork;
 using AgnesBot.Core.Utils;
 using Autofac;
+using Castle.MicroKernel.Registration;
+using Castle.Windsor;
+using Raven.Client;
 using Raven.Client.Document;
 
 namespace AgnesBot.Server
@@ -14,9 +18,9 @@ namespace AgnesBot.Server
     {
         static void Main(string[] args)
         {
-            SetupContainer();
-
             Console.WriteLine("== AgnesBot ==");
+
+            SetupContainer();
 
             IoC.Resolve<BotRunner>().Start();
 
@@ -26,37 +30,32 @@ namespace AgnesBot.Server
 
         private static void SetupContainer()
         {
-            var builder = new ContainerBuilder();
+            var container = new WindsorContainer();
 
-            RegisterComponents(builder);
-            RegisterModules(builder);
-            RegisterRaven(builder);
-            
-            IoC.Initialize(builder.Build());
+            RegisterComponents(container);
+            RegisterModules(container);
+            RegisterRaven(container);
+
+            IoC.Initialize(container);
         }
 
-        private static void RegisterComponents(ContainerBuilder builder)
+        private static void RegisterComponents(IWindsorContainer container)
         {
-            builder.RegisterType<ConfigurationManager>()
-                .As<IConfigurationManager>()
-                .SingleInstance();
-
-            builder.RegisterType<BotRunner>()
-                .SingleInstance();
-
-            builder.RegisterType<IrcClient>()
-                .As<IIrcClient>()
-                .SingleInstance();
+            container.Register(Component.For<IConfigurationManager>().ImplementedBy<ConfigurationManager>());
+            container.Register(Component.For<BotRunner>().ImplementedBy<BotRunner>());
+            container.Register(Component.For<IIrcClient>().ImplementedBy<IrcClient>());
+            container.Register(Component.For<IUnitOfWorkFactory>().ImplementedBy<UnitOfWorkFactory>());
         }
 
-        private static void RegisterRaven(ContainerBuilder builder)
+        private static void RegisterRaven(IWindsorContainer container)
         {
             var store = new DocumentStore { Url = "http://localhost:8080" };
             store.Initialize();
-            builder.RegisterInstance(store);
+
+            container.Register(Component.For<IDocumentStore>().Instance(store));
         }
 
-        private static void RegisterModules(ContainerBuilder builder)
+        private static void RegisterModules(IWindsorContainer container)
         {
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
@@ -65,17 +64,21 @@ namespace AgnesBot.Server
 
             Console.WriteLine("Registering Modules");
 
-            builder.RegisterAssemblyTypes(assemblies.ToArray())
-                .Where(x => typeof (IModule).IsAssignableFrom(x) && !x.IsAbstract)
-                .OnRegistered(x => Console.WriteLine(string.Format("{0} Registered", x.ComponentRegistration.Activator)))
-                .As<IModule>();
-            
+            foreach (var assembly in assemblies)
+                container.Register(
+                    AllTypes
+                        .FromAssembly(assembly)
+                        .BasedOn<IModule>()
+                        .WithService
+                        .FirstInterface()
+                    );
+                    
             var installers = assemblies.SelectMany(x => x.GetTypes())
-                .Where(x => typeof (IInstaller).IsAssignableFrom(x))
-                .Select(x => (IInstaller) Activator.CreateInstance(x));
+                .Where(x => typeof (IWindsorInstaller).IsAssignableFrom(x))
+                .Select(x => (IWindsorInstaller)Activator.CreateInstance(x));
 
             foreach (var installer in installers)
-                installer.Install(builder);
+                container.Install(installer);
         }
     }
 }

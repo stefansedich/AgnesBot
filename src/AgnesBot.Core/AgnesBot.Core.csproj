@@ -31,11 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac">
-      <HintPath>..\..\lib\Autofac.dll</HintPath>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\lib\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Autofac.Configuration">
-      <HintPath>..\..\lib\Autofac.Configuration.dll</HintPath>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\..\lib\Castle.Windsor.dll</HintPath>
     </Reference>
     <Reference Include="Meebey.SmartIrc4net">
       <HintPath>..\..\lib\Meebey.SmartIrc4net.dll</HintPath>
@@ -55,7 +55,6 @@
   <ItemGroup>
     <Compile Include="Data\BaseRepository.cs" />
     <Compile Include="Utils\ConfigurationManager.cs" />
-    <Compile Include="Utils\IInstaller.cs" />
     <Compile Include="Utils\IoC.cs" />
     <Compile Include="IrcUtils\IrcClient.cs" />
     <Compile Include="Modules\BaseModule.cs" />
@@ -64,7 +63,11 @@
     <Compile Include="IrcUtils\IrcMessageData.cs" />
     <Compile Include="IrcUtils\ReceiveType.cs" />
     <Compile Include="IrcUtils\SendType.cs" />
+    <Compile Include="UnitOfWork\IUnitOfWork.cs" />
+    <Compile Include="UnitOfWork\IUnitOfWorkFactory.cs" />
     <Compile Include="Utils\SystemTime.cs" />
+    <Compile Include="UnitOfWork\UnitOfWork.cs" />
+    <Compile Include="UnitOfWork\UnitOfWorkFactory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

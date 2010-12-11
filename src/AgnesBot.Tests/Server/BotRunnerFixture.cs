@@ -4,6 +4,7 @@ using AgnesBot.Core.Modules;
 using AgnesBot.Core.Utils;
 using AgnesBot.Server;
 using Autofac;
+using Castle.Windsor;
 using NUnit.Framework;
 using System.Collections.Generic;
 using Rhino.Mocks;
@@ -102,13 +103,14 @@ namespace AgnesBot.Tests.Server
             var module1 = MockRepository.GenerateStub<IModule>();
             var module2 = MockRepository.GenerateStub<IModule>();
             
-            var builder = new ContainerBuilder();
-            builder.RegisterInstance(module1).As<IModule>();
-            builder.RegisterInstance(module2).As<IModule>();
-            IoC.Initialize(builder.Build());
-
             _client.Stub(client => client.MessageParser("message"))
                 .Return(message);
+
+            var container = MockRepository.GenerateStub<IWindsorContainer>();
+            container.Stub(x => x.ResolveAll<IModule>())
+                .Return(new []{module1, module2});
+
+            IoC.Initialize(container);
             
             // Act 
             _runner.Start();
@@ -126,10 +128,6 @@ namespace AgnesBot.Tests.Server
             var data = new IrcMessageData();
             var module1 = MockRepository.GenerateStub<IModule>();
             
-            var builder = new ContainerBuilder();
-            builder.RegisterInstance(module1).As<IModule>();
-            IoC.Initialize(builder.Build());
-
             _client.Stub(client => client.MessageParser("message"))
                 .Return(data);
 
@@ -150,10 +148,6 @@ namespace AgnesBot.Tests.Server
             // Arrange
             var data = new IrcMessageData();
             var module1 = MockRepository.GenerateStub<IModule>();
-
-            var builder = new ContainerBuilder();
-            builder.RegisterInstance(module1).As<IModule>();
-            IoC.Initialize(builder.Build());
 
             _client.Stub(client => client.MessageParser(""))
                 .Return(data);

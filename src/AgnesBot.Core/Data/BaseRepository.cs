@@ -1,12 +1,13 @@
-using Raven.Client.Document;
+using AgnesBot.Core.UnitOfWork;
+using Raven.Client;
 
 namespace AgnesBot.Core.Data
 {
     public class BaseRepository
     {
-        protected DocumentSession Session
+        protected IDocumentSession Session
         {
-            get { return null; }
+            get { return UnitOfWorkFactory.CurrentUnitOfWork.CurrentSession; }
         }
     }
 }
