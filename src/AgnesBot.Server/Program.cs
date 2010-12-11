@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using AgnesBot.Core;
 using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.Modules;
 using AgnesBot.Core.Utils;
@@ -16,6 +15,8 @@ namespace AgnesBot.Server
         static void Main(string[] args)
         {
             SetupContainer();
+
+            Console.WriteLine("== AgnesBot ==");
 
             IoC.Resolve<BotRunner>().Start();
 
@@ -31,8 +32,7 @@ namespace AgnesBot.Server
             RegisterModules(builder);
             RegisterRaven(builder);
             
-            var container = builder.Build();
-            IoC.Initialize(container);
+            IoC.Initialize(builder.Build());
         }
 
         private static void RegisterComponents(ContainerBuilder builder)
