@@ -40,6 +40,9 @@
     <Reference Include="Meebey.SmartIrc4net">
       <HintPath>..\..\lib\Meebey.SmartIrc4net.dll</HintPath>
     </Reference>
+    <Reference Include="Raven.Client.Lightweight-3.5">
+      <HintPath>..\AgnesBot.Tests\bin\Debug\Raven.Client.Lightweight-3.5.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -50,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\BaseRepository.cs" />
     <Compile Include="Utils\ConfigurationManager.cs" />
     <Compile Include="Utils\IInstaller.cs" />
     <Compile Include="Utils\IoC.cs" />

@@ -1,17 +1,17 @@
-﻿namespace AgnesBot.Modules.CommentModule
+﻿using AgnesBot.Core.Data;
+
+namespace AgnesBot.Modules.CommentModule
 {
     public interface ICommentRepository
     {
         void CreateComment(Comment comment);
     }
 
-    public class CommentRepository : ICommentRepository
+    public class CommentRepository : BaseRepository, ICommentRepository
     {
-        public CommentRepository() { }
-
         public void CreateComment(Comment comment)
         {
-            
+            Session.Store(comment);
         }
     }
 }
