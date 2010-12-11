@@ -37,8 +37,11 @@
     <Reference Include="Castle.Windsor">
       <HintPath>..\..\lib\Castle.Windsor.dll</HintPath>
     </Reference>
-    <Reference Include="Raven.Client.Lightweight-3.5">
-      <HintPath>..\..\lib\Raven.Client.Lightweight-3.5.dll</HintPath>
+    <Reference Include="Raven.Abstractions">
+      <HintPath>..\..\lib\Raven.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.Lightweight">
+      <HintPath>..\..\lib\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,6 +56,7 @@
     <Compile Include="CommentModule.cs" />
     <Compile Include="Domain\CommentRepository.cs" />
     <Compile Include="CommentModuleInstaller.cs" />
+    <Compile Include="Indexes\Comments_ByText.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

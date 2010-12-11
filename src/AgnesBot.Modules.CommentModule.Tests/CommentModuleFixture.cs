@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using AgnesBot.Core;
 using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.UnitOfWork;
+using AgnesBot.Core.Utils;
 using AgnesBot.Modules.CommentModule.Domain;
+using Castle.Windsor;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -21,6 +24,16 @@ namespace AgnesBot.Modules.CommentModule.Tests
             _client = MockRepository.GenerateStub<IIrcClient>();
             _repository = MockRepository.GenerateStub<ICommentRepository>();
             _module = new CommentModule(_client, _repository);
+
+            var unitOfWork = MockRepository.GenerateStub<IUnitOfWork>();
+            var unitOfWorkFactory = MockRepository.GenerateStub<IUnitOfWorkFactory>();
+            unitOfWorkFactory.Stub(x => x.Create()).Return(unitOfWork);
+            
+            var container = MockRepository.GenerateStub<IWindsorContainer>();
+            container.Stub(x => x.Resolve<IUnitOfWorkFactory>())
+                .Return(unitOfWorkFactory);
+            
+            IoC.Initialize(container);
         }
 
         [Test]
@@ -60,22 +73,22 @@ namespace AgnesBot.Modules.CommentModule.Tests
         }
 
         [Test]
-        public void Comment_Search_Returns_First_Result()
+        public void Comment_Search_Returns_Top_3_Results()
         {
             // Arrange
             const string term = "abc";
 
             var comment = new Comment {Text = "testing"};
-            var data = new IrcMessageData {Message = "!comments search " + term};
+            var data = new IrcMessageData {Message = "!comments find " + term};
 
             _repository.Stub(repository => repository.SearchComments(term))
-                .Return(comment);
+                .Return(new List<Comment> { comment });
 
             // Act
             _module.Process(data);
 
             // Assert
-            _client.AssertWasCalled(client => client.SendMessage(SendType.Message, data.Channel, comment.Text));
+            _client.AssertWasCalled(client => client.SendMessage(SendType.Message, data.Channel, string.Format("{0} on {1}", comment.Text, comment.Timestamp)));
         }
     }
 }

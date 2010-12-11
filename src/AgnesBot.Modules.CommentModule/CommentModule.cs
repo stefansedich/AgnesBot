@@ -15,7 +15,7 @@ namespace AgnesBot.Modules.CommentModule
             _commentRepository = commentRepository;
 
             AddHandler(data => data.Message.StartsWith("!comments add"), AddComment);
-            AddHandler(data => data.Message.StartsWith("!comments search"), SearchComments);
+            AddHandler(data => data.Message.StartsWith("!comments find"), SearchComments);
         }
         
         private void AddComment(IrcMessageData data)
@@ -36,19 +36,17 @@ namespace AgnesBot.Modules.CommentModule
 
         public void SearchComments(IrcMessageData data)
         {
-            string text = data.Message.Substring(17).Trim();
+            string text = data.Message.Substring(15).Trim();
 
             if (string.IsNullOrEmpty(text))
                 return;
 
             UnitOfWork.Start(() =>
                                  {
-                                     var comment = _commentRepository.SearchComments(text);
+                                     var comments = _commentRepository.SearchComments(text);
                                      
-                                     if(comment == null)
-                                         return;
-
-                                     Client.SendMessage(SendType.Message, data.Channel, comment.Text);
+                                     foreach (var comment in comments)
+                                         Client.SendMessage(SendType.Message, data.Channel, string.Format("{0} on {1}", comment.Text, comment.Timestamp));
                                  });
         }
     }

@@ -68,10 +68,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Meebey.SmartIrc4net.dll</HintPath>
     </Reference>
-    <Reference Include="Raven.Client.Lightweight-3.5">
-      <HintPath>..\..\lib\Raven.Client.Lightweight-3.5.dll</HintPath>
+    <Reference Include="Raven.Abstractions">
+      <HintPath>..\..\lib\Raven.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.Lightweight">
+      <HintPath>..\..\lib\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -6,11 +7,11 @@ using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.Modules;
 using AgnesBot.Core.UnitOfWork;
 using AgnesBot.Core.Utils;
-using Autofac;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Raven.Client;
 using Raven.Client.Document;
+using Raven.Client.Indexes;
 
 namespace AgnesBot.Server
 {
@@ -18,23 +19,21 @@ namespace AgnesBot.Server
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("== AgnesBot ==");
+            Console.WriteLine("- Starting AgnesBot -");
 
             SetupContainer();
 
             IoC.Resolve<BotRunner>().Start();
-
-            Console.WriteLine("Press enter to exit...");
-            Console.ReadKey();
         }
 
         private static void SetupContainer()
         {
             var container = new WindsorContainer();
+            var moduleAssemblies = GetModuleAssemblies();
 
             RegisterComponents(container);
-            RegisterModules(container);
-            RegisterRaven(container);
+            RegisterModules(container, moduleAssemblies);
+            RegisterRaven(container, moduleAssemblies);
 
             IoC.Initialize(container);
         }
@@ -47,24 +46,25 @@ namespace AgnesBot.Server
             container.Register(Component.For<IUnitOfWorkFactory>().ImplementedBy<UnitOfWorkFactory>());
         }
 
-        private static void RegisterRaven(IWindsorContainer container)
+        private static void RegisterRaven(IWindsorContainer container, IEnumerable<Assembly> moduleAssemblies)
         {
             var store = new DocumentStore { Url = "http://localhost:8080" };
             store.Initialize();
 
             container.Register(Component.For<IDocumentStore>().Instance(store));
+            
+            foreach (var assembly in moduleAssemblies)
+                IndexCreation.CreateIndexes(assembly, store);
         }
 
-        private static void RegisterModules(IWindsorContainer container)
+        private static void RegisterModules(IWindsorContainer container, IEnumerable<Assembly> moduleAssemblies)
         {
-            string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            Console.WriteLine("- Registering Modules -");
 
-            var assemblies = Directory.GetFiles(path, "AgnesBot.Modules.*.dll")
-                .Select(Assembly.LoadFile);
+            foreach (var assembly in moduleAssemblies)
+            {
+                Console.WriteLine("Registering Module: " + assembly.FullName);
 
-            Console.WriteLine("Registering Modules");
-
-            foreach (var assembly in assemblies)
                 container.Register(
                     AllTypes
                         .FromAssembly(assembly)
@@ -72,13 +72,25 @@ namespace AgnesBot.Server
                         .WithService
                         .FirstInterface()
                     );
-                    
-            var installers = assemblies.SelectMany(x => x.GetTypes())
+            }
+
+            var installers = moduleAssemblies.SelectMany(x => x.GetTypes())
                 .Where(x => typeof (IWindsorInstaller).IsAssignableFrom(x))
                 .Select(x => (IWindsorInstaller)Activator.CreateInstance(x));
 
             foreach (var installer in installers)
                 container.Install(installer);
+
+            Console.WriteLine("- Modules Registered -");
+        }
+
+        private static IList<Assembly> GetModuleAssemblies()
+        {
+            string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+            return Directory.GetFiles(path, "AgnesBot.Modules.*.dll")
+                .Select(Assembly.LoadFile)
+                .ToList();
         }
     }
 }

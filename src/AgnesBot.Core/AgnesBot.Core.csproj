@@ -40,8 +40,8 @@
     <Reference Include="Meebey.SmartIrc4net">
       <HintPath>..\..\lib\Meebey.SmartIrc4net.dll</HintPath>
     </Reference>
-    <Reference Include="Raven.Client.Lightweight-3.5">
-      <HintPath>..\AgnesBot.Tests\bin\Debug\Raven.Client.Lightweight-3.5.dll</HintPath>
+    <Reference Include="Raven.Client.Lightweight">
+      <HintPath>..\..\lib\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -68,6 +68,9 @@
     <Compile Include="Utils\SystemTime.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
     <Compile Include="UnitOfWork\UnitOfWorkFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="RavenIndexes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
