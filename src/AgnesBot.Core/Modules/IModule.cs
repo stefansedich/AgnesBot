@@ -1,5 +1,5 @@
 ﻿using System;
-using AgnesBot.Core.Irc;
+using AgnesBot.Core.IrcUtils;
 
 namespace AgnesBot.Core.Modules
 {

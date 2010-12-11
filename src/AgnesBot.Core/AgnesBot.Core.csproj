@@ -57,13 +57,13 @@
     <Compile Include="Utils\ConfigurationManager.cs" />
     <Compile Include="Utils\IInstaller.cs" />
     <Compile Include="Utils\IoC.cs" />
-    <Compile Include="Irc\IrcClient.cs" />
+    <Compile Include="IrcUtils\IrcClient.cs" />
     <Compile Include="Modules\BaseModule.cs" />
     <Compile Include="Modules\IModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Irc\IrcMessageData.cs" />
-    <Compile Include="Irc\ReceiveType.cs" />
-    <Compile Include="Irc\SendType.cs" />
+    <Compile Include="IrcUtils\IrcMessageData.cs" />
+    <Compile Include="IrcUtils\ReceiveType.cs" />
+    <Compile Include="IrcUtils\SendType.cs" />
     <Compile Include="Utils\SystemTime.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

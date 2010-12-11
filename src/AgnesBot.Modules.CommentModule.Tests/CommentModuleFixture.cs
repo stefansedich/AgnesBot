@@ -1,6 +1,6 @@
 ﻿using System;
 using AgnesBot.Core;
-using AgnesBot.Core.Irc;
+using AgnesBot.Core.IrcUtils;
 using AgnesBot.Modules.CommentModule.Domain;
 using NUnit.Framework;
 using Rhino.Mocks;

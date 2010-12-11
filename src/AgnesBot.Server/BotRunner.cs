@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AgnesBot.Core;
-using AgnesBot.Core.Irc;
+using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.Modules;
 
 namespace AgnesBot.Server

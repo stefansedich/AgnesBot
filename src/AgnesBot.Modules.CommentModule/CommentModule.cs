@@ -1,5 +1,5 @@
 using AgnesBot.Core;
-using AgnesBot.Core.Irc;
+using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.Modules;
 using AgnesBot.Modules.CommentModule.Domain;
 

@@ -1,8 +1,6 @@
 using System;
-using IrcMessageData = AgnesBot.Core.Irc.IrcMessageData;
-using SendType = AgnesBot.Core.Irc.SendType;
 
-namespace AgnesBot.Core.Irc
+namespace AgnesBot.Core.IrcUtils
 {
     public interface IIrcClient
     {

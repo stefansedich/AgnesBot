@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using AgnesBot.Core;
-using AgnesBot.Core.Irc;
+using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.Modules;
 using AgnesBot.Core.Utils;
 using Autofac;

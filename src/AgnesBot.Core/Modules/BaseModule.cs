@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AgnesBot.Core.Irc;
+using AgnesBot.Core.IrcUtils;
 
 namespace AgnesBot.Core.Modules
 {
