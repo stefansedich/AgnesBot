@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AgnesBot.Modules.CommentModule
+namespace AgnesBot.Modules.CommentModule.Domain
 {
     public class Comment
     {

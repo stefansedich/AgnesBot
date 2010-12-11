@@ -1,4 +1,5 @@
 using AgnesBot.Core.Utils;
+using AgnesBot.Modules.CommentModule.Domain;
 using Autofac;
 
 namespace AgnesBot.Modules.CommentModule

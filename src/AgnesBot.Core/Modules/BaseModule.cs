@@ -25,9 +25,6 @@ namespace AgnesBot.Core.Modules
 
         public void Process(IrcMessageData data)
         {
-            if (string.IsNullOrEmpty(data.Message))
-                return;
-
             var handlers = _handlers.Where(handler => handler.Key(data));
 
             foreach (var handler in handlers)

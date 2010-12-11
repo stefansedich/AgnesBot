@@ -19,17 +19,12 @@ namespace AgnesBot.Server
 
         public void Start()
         {
-            ConnectToServer();
-        }
-
-        private void ConnectToServer()
-        {
             _client.OnConnected = () => OnConnected();
             _client.OnReadLine = line => OnReadLine(line);
-            
+
             _client.Connect(_configurationManager.Server, _configurationManager.Port);
         }
-
+        
         void OnConnected()
         {
             _client.Login(_configurationManager.Nickname, _configurationManager.Hostname, 0, _configurationManager.Email, String.Empty);
@@ -46,6 +41,9 @@ namespace AgnesBot.Server
         private void OnReadLine(string line)
         {
             var data = _client.MessageParser(line);
+
+            if (string.IsNullOrEmpty(data.Message))
+                return;
 
             if (_client.IsMe(data.Nickname))
                 return;

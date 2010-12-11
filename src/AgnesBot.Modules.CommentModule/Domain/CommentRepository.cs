@@ -1,6 +1,6 @@
 ﻿using AgnesBot.Core.Data;
 
-namespace AgnesBot.Modules.CommentModule
+namespace AgnesBot.Modules.CommentModule.Domain
 {
     public interface ICommentRepository
     {

@@ -44,9 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Comment.cs" />
+    <Compile Include="Domain\Comment.cs" />
     <Compile Include="CommentModule.cs" />
-    <Compile Include="CommentRepository.cs" />
+    <Compile Include="Domain\CommentRepository.cs" />
     <Compile Include="CommentModuleInstaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

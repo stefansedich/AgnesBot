@@ -1,6 +1,7 @@
 using AgnesBot.Core;
 using AgnesBot.Core.Irc;
 using AgnesBot.Core.Modules;
+using AgnesBot.Modules.CommentModule.Domain;
 
 namespace AgnesBot.Modules.CommentModule
 {

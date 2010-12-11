@@ -96,7 +96,7 @@ namespace AgnesBot.Tests.Server
         public void BotRunner_Calls_Process_On_All_Modules_For_New_Line()
         {
             // Arrange
-            var message = new IrcMessageData();
+            var message = new IrcMessageData() {Message = "!test"};
 
             var module1 = MockRepository.GenerateStub<IModule>();
             var module2 = MockRepository.GenerateStub<IModule>();
@@ -138,6 +138,31 @@ namespace AgnesBot.Tests.Server
             // Act
             _runner.Start();
             _client.OnReadLine("message");
+
+            // Assert
+            module1.AssertWasNotCalled(module => module.Process(data));
+        }
+
+        [Test]
+        public void BotRunner_Does_Not_Process_Empty_Message()
+        {
+            // Arrange
+            var data = new IrcMessageData();
+            var module1 = MockRepository.GenerateStub<IModule>();
+
+            var builder = new ContainerBuilder();
+            builder.RegisterInstance(module1).As<IModule>();
+            IoC.Initialize(builder.Build());
+
+            _client.Stub(client => client.MessageParser(""))
+                .Return(data);
+
+            _client.Stub(client => client.IsMe(data.Nickname))
+                .Return(true);
+
+            // Act
+            _runner.Start();
+            _client.OnReadLine("");
 
             // Assert
             module1.AssertWasNotCalled(module => module.Process(data));
