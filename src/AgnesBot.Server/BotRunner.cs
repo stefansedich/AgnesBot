@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AgnesBot.Core;
 using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.Modules;
+using AgnesBot.Core.Utils;
 
 namespace AgnesBot.Server
 {

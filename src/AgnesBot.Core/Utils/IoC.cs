@@ -1,7 +1,6 @@
-using System;
 using Autofac;
 
-namespace AgnesBot.Core
+namespace AgnesBot.Core.Utils
 {
     public static class IoC
     {
