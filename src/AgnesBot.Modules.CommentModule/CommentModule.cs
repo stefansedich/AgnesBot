@@ -20,7 +20,7 @@ namespace AgnesBot.Modules.CommentModule
         
         private void AddComment(IrcMessageData data)
         {
-            string text = data.Message.Substring(14).Trim();
+            string text = data.Message.Substring(13).Trim();
 
             if (string.IsNullOrEmpty(text))
                 return;
@@ -36,7 +36,7 @@ namespace AgnesBot.Modules.CommentModule
 
         public void SearchComments(IrcMessageData data)
         {
-            string text = data.Message.Substring(15).Trim();
+            string text = data.Message.Substring(14).Trim();
 
             if (string.IsNullOrEmpty(text))
                 return;

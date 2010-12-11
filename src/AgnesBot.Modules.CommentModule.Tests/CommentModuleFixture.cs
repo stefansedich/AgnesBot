@@ -62,7 +62,7 @@ namespace AgnesBot.Modules.CommentModule.Tests
         public void Does_Not_Add_Empty_Comment()
         {
             // Arrange
-            var data = new IrcMessageData() { Message = "!comments add    " };
+            var data = new IrcMessageData() { Message = "!comments add" };
 
             // Act
             _module.Process(data);
