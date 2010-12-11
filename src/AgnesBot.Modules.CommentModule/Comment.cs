@@ -1,4 +1,4 @@
-﻿namespace AgnesBot.Domain
+﻿namespace AgnesBot.Modules.CommentModule
 {
     public class Comment
     {

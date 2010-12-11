@@ -1,10 +1,10 @@
 ﻿using System;
-using AgnesBot.Core;
-using AgnesBot.Modules;
-using Meebey.SmartIrc4net;
 using System.Collections.Generic;
+using AgnesBot.Core;
+using AgnesBot.Core.Irc;
+using AgnesBot.Core.Modules;
 
-namespace AgnesBot
+namespace AgnesBot.Server
 {
     public class BotRunner
     {
@@ -45,13 +45,13 @@ namespace AgnesBot
 
         private void OnReadLine(string line)
         {
-            var message = _client.MessageParser(line);
+            var data = _client.MessageParser(line);
 
-            if (_client.IsMe(message.Nick))
+            if (_client.IsMe(data.Nickname))
                 return;
 
-            foreach (var handler in IoC.Resolve<IEnumerable<BaseModule>>())
-                handler.Process(message);
+            foreach (var handler in IoC.Resolve<IEnumerable<IModule>>())
+                handler.Process(data);
         }
     }
 }

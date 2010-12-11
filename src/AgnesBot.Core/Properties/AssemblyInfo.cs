@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AgnesBot.Repositories")]
+[assembly: AssemblyTitle("AgnesBot.Core")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("AgnesBot.Repositories")]
+[assembly: AssemblyProduct("AgnesBot.Core")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4811839d-be1d-4e41-8286-31e626378791")]
+[assembly: Guid("a2d6beca-21c8-4dbf-94f5-743d352a63b1")]
 
 // Version information for an assembly consists of the following four values:
 //

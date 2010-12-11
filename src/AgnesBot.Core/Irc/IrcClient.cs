@@ -1,7 +1,8 @@
 using System;
-using Meebey.SmartIrc4net;
+using IrcMessageData = AgnesBot.Core.Irc.IrcMessageData;
+using SendType = AgnesBot.Core.Irc.SendType;
 
-namespace AgnesBot.Core
+namespace AgnesBot.Core.Irc
 {
     public interface IIrcClient
     {
@@ -11,7 +12,7 @@ namespace AgnesBot.Core
         void Listen();
         void SendMessage(SendType type, string destination, string message);
         bool IsMe(string nick);
-        IrcMessage MessageParser(string line);
+        IrcMessageData MessageParser(string line);
 
         Action OnConnected { get; set; }
         Action<string> OnReadLine { get; set; }
@@ -49,17 +50,16 @@ namespace AgnesBot.Core
             _client.Listen();
         }
 
-        public IrcMessage MessageParser(string line)
+        public IrcMessageData MessageParser(string line)
         {
             var data = _client.MessageParser(line);
 
-            return new IrcMessage
+            return new IrcMessageData
                        {
+                           Message = data.Message,
                            Channel = data.Channel,
                            From = data.From,
-                           Nick = data.Nick,
-                           Message = data.Message,
-                           Type = data.Type
+                           Type = (ReceiveType) data.Type
                        };
         }
         
@@ -70,7 +70,7 @@ namespace AgnesBot.Core
 
         public void SendMessage(SendType type, string destination, string message)
         {
-            _client.SendMessage(type, destination, message);
+            _client.SendMessage((Meebey.SmartIrc4net.SendType) type, destination, message);
         }
 
         public Action OnConnected { get; set; }

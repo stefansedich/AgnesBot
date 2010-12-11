@@ -4,13 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using AgnesBot.Core;
-using AgnesBot.Domain.Interfaces;
-using AgnesBot.Modules;
-using AgnesBot.Repositories;
+using AgnesBot.Core.Irc;
+using AgnesBot.Core.Modules;
+using AgnesBot.Core.Utils;
 using Autofac;
 using Raven.Client.Document;
 
-namespace AgnesBot
+namespace AgnesBot.Server
 {
     class Program
     {
@@ -38,35 +38,42 @@ namespace AgnesBot
             builder.RegisterType<IrcClient>()
                 .As<IIrcClient>()
                 .SingleInstance();
-
-            builder.RegisterType<CommentRepository>()
-                .As<ICommentRepository>();
-
-            RegisterRavenDBStore(builder);
-            RegisterModulesAndHandlersInContainer(builder);
+            
+            RegisterRaven(builder);
+            RegisterModules(builder);
             
             var container = builder.Build();
             IoC.Initialize(container);
         }
 
-        private static void RegisterRavenDBStore(ContainerBuilder builder)
+        private static void RegisterRaven(ContainerBuilder builder)
         {
             var store = new DocumentStore { Url = "http://localhost:8080" };
             store.Initialize();
             builder.RegisterInstance(store);
         }
 
-        private static void RegisterModulesAndHandlersInContainer(ContainerBuilder builder)
+        private static void RegisterModules(ContainerBuilder builder)
         {
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-            var assemblies = Directory.GetFiles(path, "*.dll")
-                .Select(assembly => Assembly.LoadFile(assembly))
-                .Concat(new List<Assembly> { Assembly.GetExecutingAssembly() });
+            var assemblies = Directory.GetFiles(path, "AgnesBot.Modules.*.dll")
+                .Select(Assembly.LoadFile);
+
+            Console.WriteLine("Registering Modules");
 
             builder.RegisterAssemblyTypes(assemblies.ToArray())
-                .Where(x => typeof (BaseModule).IsAssignableFrom(x) && !x.IsAbstract)
-                .As<BaseModule>();
+                .Where(x => typeof (IModule).IsAssignableFrom(x) && !x.IsAbstract)
+                .OnRegistered(x => Console.WriteLine(string.Format("{0} Registered", x.ComponentRegistration.Activator)))
+                .As<IModule>();
+            
+            
+            var installers = assemblies.SelectMany(x => x.GetTypes())
+                .Where(x => typeof (IInstaller).IsAssignableFrom(x))
+                .Select(x => (IInstaller) Activator.CreateInstance(x));
+
+            foreach (var installer in installers)
+                installer.Install(builder);
         }
     }
 }

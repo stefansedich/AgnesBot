@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgnesBot", "AgnesBot\AgnesBot.csproj", "{D820EA05-1167-49F8-A98D-99E2A57E0469}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgnesBot.Tests", "AgnesBot.Tests\AgnesBot.Tests.csproj", "{8C79F147-D839-44C2-868F-44FE6849C2EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgnesBot.Domain", "AgnesBot.Domain\AgnesBot.Domain.csproj", "{0A407B9F-15E1-4043-A4E0-79027AD30175}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgnesBot.Core", "AgnesBot.Core\AgnesBot.Core.csproj", "{CE05A9C0-91A6-475A-A2F8-0137EB88EE30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgnesBot.Repositories", "AgnesBot.Repositories\AgnesBot.Repositories.csproj", "{DD575818-5B1F-4B55-B1F2-5FCB4BEC6E77}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgnesBot.Modules.CommentModule", "AgnesBot.Modules.CommentModule\AgnesBot.Modules.CommentModule.csproj", "{22914356-0706-4E84-BB4D-C37AC51E3B41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgnesBot.Server", "AgnesBot.Server\AgnesBot.Server.csproj", "{D820EA05-1167-49F8-A98D-99E2A57E0469}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,22 +15,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D820EA05-1167-49F8-A98D-99E2A57E0469}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D820EA05-1167-49F8-A98D-99E2A57E0469}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D820EA05-1167-49F8-A98D-99E2A57E0469}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D820EA05-1167-49F8-A98D-99E2A57E0469}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8C79F147-D839-44C2-868F-44FE6849C2EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8C79F147-D839-44C2-868F-44FE6849C2EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C79F147-D839-44C2-868F-44FE6849C2EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C79F147-D839-44C2-868F-44FE6849C2EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0A407B9F-15E1-4043-A4E0-79027AD30175}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0A407B9F-15E1-4043-A4E0-79027AD30175}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0A407B9F-15E1-4043-A4E0-79027AD30175}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0A407B9F-15E1-4043-A4E0-79027AD30175}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DD575818-5B1F-4B55-B1F2-5FCB4BEC6E77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DD575818-5B1F-4B55-B1F2-5FCB4BEC6E77}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DD575818-5B1F-4B55-B1F2-5FCB4BEC6E77}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DD575818-5B1F-4B55-B1F2-5FCB4BEC6E77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE05A9C0-91A6-475A-A2F8-0137EB88EE30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE05A9C0-91A6-475A-A2F8-0137EB88EE30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE05A9C0-91A6-475A-A2F8-0137EB88EE30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE05A9C0-91A6-475A-A2F8-0137EB88EE30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22914356-0706-4E84-BB4D-C37AC51E3B41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22914356-0706-4E84-BB4D-C37AC51E3B41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22914356-0706-4E84-BB4D-C37AC51E3B41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22914356-0706-4E84-BB4D-C37AC51E3B41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D820EA05-1167-49F8-A98D-99E2A57E0469}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D820EA05-1167-49F8-A98D-99E2A57E0469}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D820EA05-1167-49F8-A98D-99E2A57E0469}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D820EA05-1167-49F8-A98D-99E2A57E0469}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,18 +1,16 @@
-using System;
-using System.Reflection;
-using System.Runtime.Serialization;
 using AgnesBot.Core;
-using AgnesBot.Modules;
+using AgnesBot.Core.Irc;
+using AgnesBot.Core.Modules;
+using AgnesBot.Server;
 using Autofac;
-using Meebey.SmartIrc4net;
 using NUnit.Framework;
 using System.Collections.Generic;
 using Rhino.Mocks;
 
-namespace AgnesBot.Tests
+namespace AgnesBot.Tests.Server
 {
     [TestFixture]
-    public class AgnesBotRunnerFixture
+    public class BotRunnerFixture
     {
         private IConfigurationManager _configurationManager;
         private BotRunner _runner;
@@ -58,8 +56,7 @@ namespace AgnesBot.Tests
         
             // Act
             _runner.Start();
-
-            _client.Raise(x => x.OnConnected += null, this, EventArgs.Empty);
+            _client.OnConnected();
 
             // Assert
             _client.AssertWasCalled(client => client.Login(NICKNAME, HOSTNAME, 0, EMAIL, string.Empty));
@@ -73,8 +70,7 @@ namespace AgnesBot.Tests
 
             // Act
             _runner.Start();
-
-            _client.Raise(x => x.OnConnected += null, this, EventArgs.Empty);
+            _client.OnConnected();
 
             // Assert
             foreach(var channel in _configurationManager.Channels)
@@ -89,9 +85,8 @@ namespace AgnesBot.Tests
 
             // Act
             _runner.Start();
-
-            _client.Raise(x => x.OnConnected += null, this, EventArgs.Empty);
-
+            _client.OnConnected();
+            
             // Assert
             foreach (var channel in _configurationManager.Channels)
                 _client.AssertWasNotCalled(client => client.RfcJoin(channel));
@@ -101,24 +96,23 @@ namespace AgnesBot.Tests
         public void BotRunner_Calls_Process_On_All_Modules_For_New_Line()
         {
             // Arrange
-            var message = new IrcMessage();
-            
-            var module1 = MockRepository.GenerateStub<BaseModule>(_client);
-            var module2 = MockRepository.GenerateStub<BaseModule>(_client);
+            var message = new IrcMessageData();
+
+            var module1 = MockRepository.GenerateStub<IModule>();
+            var module2 = MockRepository.GenerateStub<IModule>();
             
             var builder = new ContainerBuilder();
-            builder.RegisterInstance(module1).As<BaseModule>();
-            builder.RegisterInstance(module2).As<BaseModule>();
+            builder.RegisterInstance(module1).As<IModule>();
+            builder.RegisterInstance(module2).As<IModule>();
             IoC.Initialize(builder.Build());
 
-            _client.Stub(client => client.MessageParser(null))
+            _client.Stub(client => client.MessageParser("message"))
                 .Return(message);
             
             // Act 
             _runner.Start();
+            _client.OnReadLine("message");
             
-            _client.Raise(x => x.OnReadLine += null, this, FormatterServices.GetUninitializedObject(typeof(ReadLineEventArgs)));
-
             // Assert
             module1.AssertWasCalled(module => module.Process(message));
             module2.AssertWasCalled(module => module.Process(message));
@@ -128,27 +122,25 @@ namespace AgnesBot.Tests
         public void BotRunner_Does_Not_Call_Process_On_Modules_If_Line_Is_From_Myself()
         {
             // Arrange
-            var message = new IrcMessage();
-
-            var module1 = MockRepository.GenerateStub<BaseModule>(_client);
+            var data = new IrcMessageData();
+            var module1 = MockRepository.GenerateStub<IModule>();
             
             var builder = new ContainerBuilder();
-            builder.RegisterInstance(module1).As<BaseModule>();
+            builder.RegisterInstance(module1).As<IModule>();
             IoC.Initialize(builder.Build());
 
-            _client.Stub(client => client.MessageParser(null))
-                .Return(message);
+            _client.Stub(client => client.MessageParser("message"))
+                .Return(data);
 
-            _client.Stub(client => client.IsMe(message.Nick))
+            _client.Stub(client => client.IsMe(data.Nickname))
                 .Return(true);
 
             // Act
             _runner.Start();
-
-            _client.Raise(x => x.OnReadLine += null, this, FormatterServices.GetUninitializedObject(typeof(ReadLineEventArgs)));
+            _client.OnReadLine("message");
 
             // Assert
-            module1.AssertWasNotCalled(module => module.Process(message));
+            module1.AssertWasNotCalled(module => module.Process(data));
         }
     }
 }

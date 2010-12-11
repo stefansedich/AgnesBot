@@ -52,18 +52,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AgnesBotRunnerFixture.cs" />
-    <Compile Include="TimeModuleFixture.cs" />
+    <Compile Include="Server\BotRunnerFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AgnesBot.Domain\AgnesBot.Domain.csproj">
-      <Project>{0A407B9F-15E1-4043-A4E0-79027AD30175}</Project>
-      <Name>AgnesBot.Domain</Name>
+    <ProjectReference Include="..\AgnesBot.Core\AgnesBot.Core.csproj">
+      <Project>{CE05A9C0-91A6-475A-A2F8-0137EB88EE30}</Project>
+      <Name>AgnesBot.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AgnesBot\AgnesBot.csproj">
+    <ProjectReference Include="..\AgnesBot.Server\AgnesBot.Server.csproj">
       <Project>{D820EA05-1167-49F8-A98D-99E2A57E0469}</Project>
-      <Name>AgnesBot</Name>
+      <Name>AgnesBot.Server</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

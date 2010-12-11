@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{DD575818-5B1F-4B55-B1F2-5FCB4BEC6E77}</ProjectGuid>
+    <ProjectGuid>{CE05A9C0-91A6-475A-A2F8-0137EB88EE30}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AgnesBot.Repositories</RootNamespace>
-    <AssemblyName>AgnesBot.Repositories</AssemblyName>
+    <RootNamespace>AgnesBot.Core</RootNamespace>
+    <AssemblyName>AgnesBot.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,16 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Autofac">
+      <HintPath>..\..\lib\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="Raven.Abstractions-3.5">
-      <HintPath>..\..\lib\Raven.Abstractions-3.5.dll</HintPath>
+    <Reference Include="Autofac.Configuration">
+      <HintPath>..\..\lib\Autofac.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Raven.Client.Lightweight-3.5">
-      <HintPath>..\..\lib\Raven.Client.Lightweight-3.5.dll</HintPath>
+    <Reference Include="Meebey.SmartIrc4net">
+      <HintPath>..\..\lib\Meebey.SmartIrc4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -49,15 +50,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseRepository.cs" />
-    <Compile Include="CommentRepository.cs" />
+    <Compile Include="Utils\ConfigurationManager.cs" />
+    <Compile Include="Utils\IInstaller.cs" />
+    <Compile Include="Utils\IoC.cs" />
+    <Compile Include="Irc\IrcClient.cs" />
+    <Compile Include="Modules\BaseModule.cs" />
+    <Compile Include="Modules\IModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AgnesBot.Domain\AgnesBot.Domain.csproj">
-      <Project>{0A407B9F-15E1-4043-A4E0-79027AD30175}</Project>
-      <Name>AgnesBot.Domain</Name>
-    </ProjectReference>
+    <Compile Include="Irc\IrcMessageData.cs" />
+    <Compile Include="Irc\ReceiveType.cs" />
+    <Compile Include="Irc\SendType.cs" />
+    <Compile Include="Utils\SystemTime.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
