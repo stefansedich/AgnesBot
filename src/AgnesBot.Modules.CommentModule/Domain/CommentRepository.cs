@@ -21,7 +21,7 @@ namespace AgnesBot.Modules.CommentModule.Domain
         public Comment SearchComments(string text)
         {
             return Session.Query<Comment>()
-                .Where(comment => comment.Text == text)
+                .Where(comment => comment.Text.Contains(text))
                 .FirstOrDefault();
         }
     }
