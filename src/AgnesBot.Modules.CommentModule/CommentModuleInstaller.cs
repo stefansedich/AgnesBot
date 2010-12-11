@@ -3,7 +3,7 @@ using Autofac;
 
 namespace AgnesBot.Modules.CommentModule
 {
-    public class Installer : IInstaller
+    public class CommentModuleInstaller : IInstaller
     {
         public void Install(ContainerBuilder builder)
         {

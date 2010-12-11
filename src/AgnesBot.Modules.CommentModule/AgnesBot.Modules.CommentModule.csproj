@@ -47,7 +47,7 @@
     <Compile Include="Comment.cs" />
     <Compile Include="CommentModule.cs" />
     <Compile Include="CommentRepository.cs" />
-    <Compile Include="Installer.cs" />
+    <Compile Include="CommentModuleInstaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

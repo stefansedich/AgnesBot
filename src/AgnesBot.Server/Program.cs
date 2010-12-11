@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -28,6 +27,16 @@ namespace AgnesBot.Server
         {
             var builder = new ContainerBuilder();
 
+            RegisterComponents(builder);
+            RegisterModules(builder);
+            RegisterRaven(builder);
+            
+            var container = builder.Build();
+            IoC.Initialize(container);
+        }
+
+        private static void RegisterComponents(ContainerBuilder builder)
+        {
             builder.RegisterType<ConfigurationManager>()
                 .As<IConfigurationManager>()
                 .SingleInstance();
@@ -38,12 +47,6 @@ namespace AgnesBot.Server
             builder.RegisterType<IrcClient>()
                 .As<IIrcClient>()
                 .SingleInstance();
-            
-            RegisterRaven(builder);
-            RegisterModules(builder);
-            
-            var container = builder.Build();
-            IoC.Initialize(container);
         }
 
         private static void RegisterRaven(ContainerBuilder builder)
@@ -66,7 +69,6 @@ namespace AgnesBot.Server
                 .Where(x => typeof (IModule).IsAssignableFrom(x) && !x.IsAbstract)
                 .OnRegistered(x => Console.WriteLine(string.Format("{0} Registered", x.ComponentRegistration.Activator)))
                 .As<IModule>();
-            
             
             var installers = assemblies.SelectMany(x => x.GetTypes())
                 .Where(x => typeof (IInstaller).IsAssignableFrom(x))
