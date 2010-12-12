@@ -10,7 +10,6 @@ namespace AgnesBot.Modules.UrlAggregatorModule
 {
     public class UrlAggregatorModule : BaseModule
     {
-        private readonly Regex _urlMatchRegex = new Regex(@"(?<url>https?://([-\w\.]+)+(:\d+)?(/([\w/_\.]*(\?\S+)?)?)?)");
         private readonly IUrlRepository _urlRepository;
 
         public UrlAggregatorModule(IIrcClient client, IUrlRepository urlRepository) : base(client)
@@ -20,7 +19,7 @@ namespace AgnesBot.Modules.UrlAggregatorModule
             AddHandler(new ModuleMessageHandler
                            {
                                Type = ReceiveType.ChannelMessage,
-                               CommandRegex = _urlMatchRegex,
+                               CommandRegex = new Regex(@"https?://([-\w\.]+)+(:\d+)?(/([\w/_\.]*(\?\S+)?)?)?"),
                                Action = AddUrl
                            });
 
@@ -45,7 +44,7 @@ namespace AgnesBot.Modules.UrlAggregatorModule
 
         private void AddUrl(IrcMessageData data, IDictionary<string, string> commandData)
         {
-            var matches = _urlMatchRegex.Matches(data.Message);
+            var matches = Regex.Matches(data.Message, @"(?<url>https?://([-\w\.]+)+(:\d+)?(/([\w/_\.]*(\?\S+)?)?)?)");
 
             UnitOfWork.Start(() =>
                                  {
