@@ -64,7 +64,6 @@ namespace AgnesBot.Modules.UrlAggregatorModule
                                                                     });
                                      }
                                  });
-
         }
     }
 }
