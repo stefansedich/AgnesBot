@@ -48,7 +48,7 @@ namespace AgnesBot.Server
 
         private static void RegisterRaven(IWindsorContainer container, IEnumerable<Assembly> moduleAssemblies)
         {
-            var store = new DocumentStore { Url = "http://localhost:8080" };
+            var store = new DocumentStore { ConnectionStringName = "RavenDb" };
             store.Initialize();
 
             container.Register(Component.For<IDocumentStore>().Instance(store));
