@@ -9,7 +9,7 @@ namespace AgnesBot.Modules.UrlAggregatorModule.Domain
         public DateTime Timestamp { get; set; }
         public bool Nsfw { get; set; }
 
-        public string SafeUrl
+        public string SafeLink
         {
             get
             {

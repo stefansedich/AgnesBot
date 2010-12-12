@@ -7,19 +7,34 @@ namespace AgnesBot.Modules.UrlAggregatorModule.Tests.Domain
     public class UrlFixture
     {
         [Test]
-        public void SafeUrl_Prepended_With_NSFW_If_Url_Is_NSFW()
+        public void SafeLink_Prepens_Link_With_NSFW_If_Url_Is_Nsfw()
         {
             // Arrange
             const string URL = "http://xx.com";
 
             var url = new Url {Link = URL};
-            Assert.AreEqual(url.SafeUrl, URL);
+            Assert.AreEqual(url.SafeLink, URL);
+
+            url.Nsfw = true;
 
             // Act
-            url.Nsfw = true;
+            string safeLink = url.SafeLink;
             
             // Assert
-            Assert.AreEqual("[NSFW] " + URL, url.SafeUrl);
+            Assert.AreEqual("[NSFW] " + URL, safeLink);
+        }
+
+        [Test]
+        public void SafeLink_Returns_Link_If_Url_Is_Sfw()
+        {
+            // Arrange
+            var url = new Url {Link = "http://google.com"};
+
+            // Act
+            string safeLink = url.SafeLink;
+
+            // Assert
+            Assert.AreEqual(url.Link, safeLink);
         }
     }
 }

@@ -38,7 +38,7 @@ namespace AgnesBot.Modules.UrlAggregatorModule
                                      var urls = _urlRepository.GetAllUrls();
 
                                      foreach (var url in urls)
-                                         Client.SendMessage(SendType.Message, data.Nickname, url.SafeUrl);
+                                         Client.SendMessage(SendType.Message, data.Nickname, url.SafeLink);
                                  });
         }
 
