@@ -29,7 +29,7 @@ namespace AgnesBot.Core.Modules
                     continue;
 
                 var match = handler.CommandRegex.Match(data.Message);
-
+                
                 if(match.Success == false)
                     continue;
 
