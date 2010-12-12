@@ -2,10 +2,10 @@ AgnesBot is a pluggable and modular IRC bot written in C# using .NET 4.0, Castle
 
 A couple of modules are provided out of the box:
 
- - Comment Module
+ - Comments Module
  - TinyUrl Module
  - Url Aggregator Module
 
-RavenDB is used as a data store which any developed modules will be able to use. 
+RavenDB is used as a data store and 3rd party modules are able to hook directly into it.
 
 Future plans are to add modules for Teamcity/CC.NET.
