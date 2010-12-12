@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using AgnesBot.Core;
 using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.Modules;
@@ -21,6 +22,24 @@ namespace AgnesBot.Modules.UrlAggregatorModule
                                CommandRegex = @"https?://([-\w\.]+)+(:\d+)?(/([\w/_\.]*(\?\S+)?)?)?",
                                Action = AddUrl
                            });
+
+            AddHandler(new ModuleMessageHandler
+                           {
+                               Type = ReceiveType.ChannelMessage,
+                               CommandRegex = "^!links",
+                               Action = ListLinks
+                           });
+        }
+
+        private void ListLinks(IrcMessageData data)
+        {
+            UnitOfWork.Start(() =>
+                                 {
+                                     var urls = _urlRepository.GetAllUrls();
+
+                                     foreach (var url in urls)
+                                         Client.SendMessage(SendType.Message, data.Nickname, url.SafeUrl);
+                                 });
         }
 
         private void AddUrl(IrcMessageData obj)
@@ -30,7 +49,8 @@ namespace AgnesBot.Modules.UrlAggregatorModule
             UnitOfWork.Start(() => _urlRepository.SaveUrl(new Url
                                                               {
                                                                   Link = url,
-                                                                  Timestamp = SystemTime.Now()
+                                                                  Timestamp = SystemTime.Now(),
+                                                                  NSFW = Regex.IsMatch(obj.Message, "nsfw", RegexOptions.IgnoreCase)
                                                               }));
         }
     }

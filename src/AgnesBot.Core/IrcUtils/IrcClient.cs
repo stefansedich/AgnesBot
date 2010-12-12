@@ -57,7 +57,8 @@ namespace AgnesBot.Core.IrcUtils
                            Message = data.Message,
                            Channel = data.Channel,
                            From = data.From,
-                           Type = (ReceiveType) data.Type
+                           Type = (ReceiveType) data.Type,
+                           Nickname = data.Nick
                        };
         }
         
