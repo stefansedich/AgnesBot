@@ -16,7 +16,7 @@ namespace AgnesBot.Modules.UrlAggregatorModule.Tests.Domain
             Assert.AreEqual(url.SafeUrl, URL);
 
             // Act
-            url.NSFW = true;
+            url.Nsfw = true;
             
             // Assert
             Assert.AreEqual("[NSFW] " + URL, url.SafeUrl);

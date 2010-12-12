@@ -70,7 +70,7 @@ namespace AgnesBot.Modules.UrlAggregatorModule.Tests
 
             // Assert
             _urlRepository.AssertWasCalled(repository => repository.SaveUrl(Arg<Url>.Matches(x =>
-                                                                                             x.NSFW
+                                                                                             x.Nsfw
                                                                                              && x.Link == URL
                                                                                              && x.Timestamp == SystemTime.Now())));
         }
@@ -95,7 +95,26 @@ namespace AgnesBot.Modules.UrlAggregatorModule.Tests
                                                                                            opt.IgnoreArguments();
                                                                                            opt.Repeat.Times(2);
                                                                                        });
+        }
 
+        [Test]
+        public void Does_Not_Add_Same_Link_Twice()
+        {
+            // Arrange
+            const string URL = "http://xx.com";
+
+            var data = new IrcMessageData {Type = ReceiveType.ChannelMessage, Message = URL};
+
+            _urlRepository.Stub(repository => repository.GetUrlByLink(URL))
+                .Return(new Url());
+
+
+            // Act
+            _module.Process(data);
+
+            // Assert
+            _urlRepository.AssertWasNotCalled(repository => repository.SaveUrl(null), opt => opt.IgnoreArguments());
+            _client.AssertWasNotCalled(client => client.SendMessage(SendType.Notice, null, null), opt => opt.IgnoreArguments());
         }
 
         [Test]
@@ -107,7 +126,7 @@ namespace AgnesBot.Modules.UrlAggregatorModule.Tests
             var links = new List<Url>
                             {
                                 new Url {Link = "a"},
-                                new Url {Link = "b", NSFW = true}
+                                new Url {Link = "b", Nsfw = true}
                             };
 
             _urlRepository.Stub(repository => repository.GetAllUrls())

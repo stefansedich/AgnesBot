@@ -9,6 +9,7 @@ namespace AgnesBot.Modules.UrlAggregatorModule.Domain
     {
         void SaveUrl(Url url);
         IList<Url> GetAllUrls();
+        Url GetUrlByLink(string url);
     }
 
     public class UrlRepository : BaseRepository, IUrlRepository
@@ -22,6 +23,13 @@ namespace AgnesBot.Modules.UrlAggregatorModule.Domain
         {
             return Session.Query<Url>()
                 .ToList();
+        }
+
+        public Url GetUrlByLink(string url)
+        {
+            return Session.Query<Url>()
+                .Where(x => x.Link == url)
+                .FirstOrDefault();
         }
     }
 }

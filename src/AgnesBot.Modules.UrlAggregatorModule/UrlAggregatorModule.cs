@@ -53,11 +53,14 @@ namespace AgnesBot.Modules.UrlAggregatorModule
                                          string url = match.Groups["url"].Value;
                                          bool nsfw = Regex.IsMatch(data.Message, "nsfw", RegexOptions.IgnoreCase);
                                          
+                                         if(_urlRepository.GetUrlByLink(url) != null)
+                                             continue;
+
                                          _urlRepository.SaveUrl(new Url
                                                                     {
                                                                         Link = url,
                                                                         Timestamp = SystemTime.Now(),
-                                                                        NSFW = nsfw
+                                                                        Nsfw = nsfw
                                                                     });
                                      }
                                  });
