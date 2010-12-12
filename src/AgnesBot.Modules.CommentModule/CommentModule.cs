@@ -20,7 +20,6 @@ namespace AgnesBot.Modules.CommentModule
                         Type = ReceiveType.ChannelMessage,
                         CommandRegex = "^!comments add",
                         Action = AddComment
-
                     }
                 );
 
