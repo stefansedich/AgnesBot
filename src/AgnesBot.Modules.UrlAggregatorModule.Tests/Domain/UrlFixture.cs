@@ -7,7 +7,7 @@ namespace AgnesBot.Modules.UrlAggregatorModule.Tests.Domain
     public class UrlFixture
     {
         [Test]
-        public void SafeUrl_Prepended_With_NSFW_If_NSFW()
+        public void SafeUrl_Prepended_With_NSFW_If_Url_Is_NSFW()
         {
             // Arrange
             const string URL = "http://xx.com";
