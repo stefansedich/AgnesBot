@@ -94,8 +94,8 @@ namespace AgnesBot.Modules.UrlAggregatorModule.Tests
             _module.Process(data);
 
             // Assert
-            _client.AssertWasCalled(client => client.SendMessage(SendType.Message, data.Nickname, links[0].Link));
-            _client.AssertWasCalled(client => client.SendMessage(SendType.Message, data.Nickname, "[NSFW] " + links[1].Link));
+            _client.AssertWasCalled(client => client.SendMessage(SendType.Message, data.Nickname, links[0].SafeUrl));
+            _client.AssertWasCalled(client => client.SendMessage(SendType.Message, data.Nickname, links[1].SafeUrl));
         }
     }
 }

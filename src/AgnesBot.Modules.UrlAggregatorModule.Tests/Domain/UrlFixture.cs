@@ -1,0 +1,25 @@
+using AgnesBot.Modules.UrlAggregatorModule.Domain;
+using NUnit.Framework;
+
+namespace AgnesBot.Modules.UrlAggregatorModule.Tests.Domain
+{
+    [TestFixture]
+    public class UrlFixture
+    {
+        [Test]
+        public void SafeUrl_Prepended_With_NSFW_If_NSFW()
+        {
+            // Arrange
+            const string URL = "http://xx.com";
+
+            var url = new Url {Link = URL};
+            Assert.AreEqual(url.SafeUrl, URL);
+
+            // Act
+            url.NSFW = true;
+            
+            // Assert
+            Assert.AreEqual("[NSFW] " + URL, url.SafeUrl);
+        }
+    }
+}
