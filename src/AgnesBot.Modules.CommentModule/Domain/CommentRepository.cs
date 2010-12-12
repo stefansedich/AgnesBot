@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AgnesBot.Core.Data;
 using AgnesBot.Modules.CommentModule.Indexes;
