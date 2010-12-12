@@ -87,7 +87,7 @@ namespace AgnesBot.Modules.CommentModule.Tests
 
             var data = new IrcMessageData { Message = "!comments find " + term, Type = ReceiveType.ChannelMessage };
 
-            _repository.Stub(repository => repository.SearchComments(term))
+            _repository.Stub(repository => repository.SearchComments(term, 3))
                 .Return(comments);
 
             // Act

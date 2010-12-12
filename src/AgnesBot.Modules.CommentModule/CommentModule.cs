@@ -60,7 +60,7 @@ namespace AgnesBot.Modules.CommentModule
 
             UnitOfWork.Start(() =>
                                  {
-                                     var comments = _commentRepository.SearchComments(text);
+                                     var comments = _commentRepository.SearchComments(text, 3);
                                      
                                      foreach (var comment in comments)
                                          Client.SendMessage(SendType.Message, data.Channel, string.Format("{0} on {1}", comment.Text, comment.Timestamp));
