@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using AgnesBot.Core;
 using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.Modules;
@@ -18,19 +19,19 @@ namespace AgnesBot.Modules.UrlAggregatorModule
             AddHandler(new ModuleMessageHandler
                            {
                                Type = ReceiveType.ChannelMessage,
-                               CommandRegex = @"https?://([-\w\.]+)+(:\d+)?(/([\w/_\.]*(\?\S+)?)?)?",
+                               CommandRegex = new Regex(@"(?<url>https?://([-\w\.]+)+(:\d+)?(/([\w/_\.]*(\?\S+)?)?)?)"),
                                Action = AddUrl
                            });
 
             AddHandler(new ModuleMessageHandler
                            {
                                Type = ReceiveType.ChannelMessage,
-                               CommandRegex = "^!links",
+                               CommandRegex = new Regex("^!links$"),
                                Action = ListLinks
                            });
         }
 
-        private void ListLinks(IrcMessageData data)
+        private void ListLinks(IrcMessageData data, IDictionary<string, string> commandData)
         {
             UnitOfWork.Start(() =>
                                  {
@@ -41,15 +42,15 @@ namespace AgnesBot.Modules.UrlAggregatorModule
                                  });
         }
 
-        private void AddUrl(IrcMessageData obj)
+        private void AddUrl(IrcMessageData data, IDictionary<string, string> commandData)
         {
-            string url = Regex.Match(obj.Message, @"https?://([-\w\.]+)+(:\d+)?(/([\w/_\.]*(\?\S+)?)?)?").Groups[0].Value;
+            string url = commandData["url"];
 
             UnitOfWork.Start(() => _urlRepository.SaveUrl(new Url
                                                               {
                                                                   Link = url,
                                                                   Timestamp = SystemTime.Now(),
-                                                                  NSFW = Regex.IsMatch(obj.Message, "nsfw", RegexOptions.IgnoreCase)
+                                                                  NSFW = Regex.IsMatch(data.Message, "nsfw", RegexOptions.IgnoreCase)
                                                               }));
         }
     }

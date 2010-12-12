@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using AgnesBot.Core;
 using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.Modules;
@@ -18,7 +20,7 @@ namespace AgnesBot.Modules.CommentModule
                 new ModuleMessageHandler
                     {
                         Type = ReceiveType.ChannelMessage,
-                        CommandRegex = "^!comments add",
+                        CommandRegex = new Regex("^!comments add (?<text>.+)$"),
                         Action = AddComment
                     }
                 );
@@ -27,15 +29,15 @@ namespace AgnesBot.Modules.CommentModule
                 new ModuleMessageHandler
                     {
                         Type = ReceiveType.ChannelMessage,
-                        CommandRegex = "^!comments find",
+                        CommandRegex = new Regex("^!comments find (?<term>.+)$"),
                         Action = SearchComments
                     }
                 );
         }
         
-        private void AddComment(IrcMessageData data)
+        private void AddComment(IrcMessageData data, IDictionary<string, string> commandData)
         {
-            string text = data.MessageWithoutCommand;
+            string text = commandData["text"];
 
             if (string.IsNullOrEmpty(text))
                 return;
@@ -49,9 +51,9 @@ namespace AgnesBot.Modules.CommentModule
             Client.SendMessage(SendType.Message, data.Channel, "Comment has been added.");
         }
 
-        public void SearchComments(IrcMessageData data)
+        public void SearchComments(IrcMessageData data, IDictionary<string, string> commandData)
         {
-            string text = data.MessageWithoutCommand;
+            string text = commandData["term"];
 
             if (string.IsNullOrEmpty(text))
                 return;

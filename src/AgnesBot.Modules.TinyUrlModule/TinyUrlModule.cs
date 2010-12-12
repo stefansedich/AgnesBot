@@ -1,4 +1,6 @@
-﻿using AgnesBot.Core.IrcUtils;
+﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.Modules;
 using AgnesBot.Modules.TinyUrlModule.Services;
 
@@ -15,14 +17,14 @@ namespace AgnesBot.Modules.TinyUrlModule
             AddHandler(new ModuleMessageHandler
                            {
                                Type = ReceiveType.ChannelMessage,
-                               CommandRegex = "^!tinyurl",
+                               CommandRegex = new Regex("^!tinyurl (?<url>.+)"),
                                Action = ShortenUrl
                            });
         }
 
-        private void ShortenUrl(IrcMessageData data)
+        private void ShortenUrl(IrcMessageData data, IDictionary<string, string> commandData)
         {
-            string url = data.MessageWithoutCommand;
+            string url = commandData["url"];
 
             if (string.IsNullOrEmpty(url))
                 return;

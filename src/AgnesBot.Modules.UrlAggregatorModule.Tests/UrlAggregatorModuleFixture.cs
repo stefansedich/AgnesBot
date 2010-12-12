@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Text.RegularExpressions;
 using AgnesBot.Core;
 using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.UnitOfWork;
@@ -35,7 +37,7 @@ namespace AgnesBot.Modules.UrlAggregatorModule.Tests
 
             IoC.Initialize(container);
         }
-
+        
         [Test]
         public void Can_Add_Links_From_Message()
         {
@@ -73,6 +75,29 @@ namespace AgnesBot.Modules.UrlAggregatorModule.Tests
                                                                                              x.NSFW
                                                                                              && x.Link == URL
                                                                                              && x.Timestamp == SystemTime.Now())));
+        }
+
+        [Test]
+        public void Can_Handle_Multiple_Links()
+        {
+            // Arrange
+            const string URL1 = "http://bob.com";
+            const string URL2 = "http://foo.com";
+
+            var data = new IrcMessageData { Type = ReceiveType.ChannelMessage, Message = "bleh " + URL1 + " awesome pic " + URL2, Channel = "#test" };
+
+            SystemTime.Now = () => new DateTime(2009, 1, 1);
+
+            // Act
+            _module.Process(data);
+
+            // Assert
+            _urlRepository.AssertWasCalled(repository => repository.SaveUrl(null), opt =>
+                                                                                       {
+                                                                                           opt.IgnoreArguments();
+                                                                                           opt.Repeat.Times(2);
+                                                                                       });
+
         }
 
         [Test]
