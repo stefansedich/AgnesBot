@@ -25,7 +25,7 @@ namespace AgnesBot.Core.Modules
         public void Process(IrcMessageData data)
         {
             _handlers.AsParallel()
-                .ForEach(handler =>
+                .ForAll(handler =>
                              {
                                  if (handler.Type != data.Type)
                                      return;
