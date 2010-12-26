@@ -1,9 +1,7 @@
-using AgnesBot.Core;
 using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.Modules;
 using AgnesBot.Core.Utils;
 using AgnesBot.Server;
-using Autofac;
 using Castle.Windsor;
 using NUnit.Framework;
 using System.Collections.Generic;
