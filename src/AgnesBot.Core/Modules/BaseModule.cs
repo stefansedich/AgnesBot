@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using AgnesBot.Core.IrcUtils;
+using Castle.Core;
 
 namespace AgnesBot.Core.Modules
 {
@@ -23,23 +24,23 @@ namespace AgnesBot.Core.Modules
 
         public void Process(IrcMessageData data)
         {
-            foreach (var handler in _handlers)
-            {
-                if (handler.Type != data.Type)
-                    continue;
+            _handlers.AsParallel()
+                .ForEach(handler =>
+                             {
+                                 if (handler.Type != data.Type)
+                                     return;
 
-                var match = handler.CommandRegex.Match(data.Message);
-                
-                if(match.Success == false)
-                    continue;
+                                 var match = handler.CommandRegex.Match(data.Message);
 
-                var commandData = handler.CommandRegex
-                    .GetGroupNames()
-                    .ToDictionary(name => name, name => match.Groups[name].Value);
+                                 if (match.Success == false)
+                                     return;
 
-                handler.Action(data, commandData);
-            }
-                
+                                 var commandData = handler.CommandRegex
+                                     .GetGroupNames()
+                                     .ToDictionary(name => name, name => match.Groups[name].Value);
+
+                                 handler.Action(data, commandData);
+                             });
         }
     }
 }
