@@ -8,6 +8,7 @@ using AgnesBot.Core.Modules;
 using AgnesBot.Core.UnitOfWork;
 using AgnesBot.Core.Utils;
 using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
 using Raven.Client;
 using Raven.Client.Document;
@@ -29,6 +30,8 @@ namespace AgnesBot.Server
         private static void SetupContainer()
         {
             var container = new WindsorContainer();
+            container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel, false));
+
             var moduleAssemblies = GetModuleAssemblies();
 
             RegisterComponents(container);

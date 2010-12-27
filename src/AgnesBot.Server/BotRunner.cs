@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using AgnesBot.Core;
+using System.Linq;
 using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.Modules;
 using AgnesBot.Core.Utils;
@@ -11,11 +11,13 @@ namespace AgnesBot.Server
     {
         private readonly IConfigurationManager _configurationManager;
         private readonly IIrcClient _client;
-        
-        public BotRunner(IConfigurationManager configurationManager, IIrcClient client)
+        private readonly IList<IModule> _modules;
+
+        public BotRunner(IConfigurationManager configurationManager, IIrcClient client, IList<IModule> modules)
         {
             _configurationManager = configurationManager;
             _client = client;
+            _modules = modules;
         }
 
         public void Start()
@@ -49,8 +51,8 @@ namespace AgnesBot.Server
             if (_client.IsMe(data.Nickname))
                 return;
 
-            foreach (var handler in IoC.ResolveAll<IModule>())
-                handler.Process(data);
+            _modules.AsParallel()
+                .ForAll(module => module.Process(data));
         }
     }
 }

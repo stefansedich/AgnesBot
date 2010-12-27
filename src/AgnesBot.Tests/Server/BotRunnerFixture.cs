@@ -15,6 +15,9 @@ namespace AgnesBot.Tests.Server
         private IConfigurationManager _configurationManager;
         private BotRunner _runner;
         private IIrcClient _client;
+        private List<IModule> _modules;
+        private IModule _module1;
+        private IModule _module2;
 
         const string SERVER = "abc";
         const int PORT = 1234;
@@ -25,9 +28,13 @@ namespace AgnesBot.Tests.Server
         [SetUp]
         public void SetUp()
         {
+            _module1 = MockRepository.GenerateStub<IModule>();
+            _module2 = MockRepository.GenerateStub<IModule>();
+            _modules = new List<IModule> {_module1, _module2};
+            
             _configurationManager = MockRepository.GenerateStub<IConfigurationManager>();
             _client = MockRepository.GenerateStub<IIrcClient>();
-            _runner = new BotRunner(_configurationManager, _client);
+            _runner = new BotRunner(_configurationManager, _client, _modules);
 
             _configurationManager.Server = SERVER;
             _configurationManager.Port = PORT;
@@ -97,26 +104,17 @@ namespace AgnesBot.Tests.Server
         {
             // Arrange
             var message = new IrcMessageData() {Message = "!test"};
-
-            var module1 = MockRepository.GenerateStub<IModule>();
-            var module2 = MockRepository.GenerateStub<IModule>();
             
             _client.Stub(client => client.MessageParser("message"))
                 .Return(message);
 
-            var container = MockRepository.GenerateStub<IWindsorContainer>();
-            container.Stub(x => x.ResolveAll<IModule>())
-                .Return(new []{module1, module2});
-
-            IoC.Initialize(container);
-            
             // Act 
             _runner.Start();
             _client.OnReadLine("message");
             
             // Assert
-            module1.AssertWasCalled(module => module.Process(message));
-            module2.AssertWasCalled(module => module.Process(message));
+            _module1.AssertWasCalled(module => module.Process(message));
+            _module2.AssertWasCalled(module => module.Process(message));
         }
 
         [Test]
@@ -124,7 +122,6 @@ namespace AgnesBot.Tests.Server
         {
             // Arrange
             var data = new IrcMessageData();
-            var module1 = MockRepository.GenerateStub<IModule>();
             
             _client.Stub(client => client.MessageParser("message"))
                 .Return(data);
@@ -137,7 +134,8 @@ namespace AgnesBot.Tests.Server
             _client.OnReadLine("message");
 
             // Assert
-            module1.AssertWasNotCalled(module => module.Process(data));
+            _module1.AssertWasNotCalled(module => module.Process(data));
+            _module2.AssertWasNotCalled(module => module.Process(data));
         }
 
         [Test]
@@ -145,8 +143,7 @@ namespace AgnesBot.Tests.Server
         {
             // Arrange
             var data = new IrcMessageData();
-            var module1 = MockRepository.GenerateStub<IModule>();
-
+            
             _client.Stub(client => client.MessageParser(""))
                 .Return(data);
 
@@ -158,7 +155,8 @@ namespace AgnesBot.Tests.Server
             _client.OnReadLine("");
 
             // Assert
-            module1.AssertWasNotCalled(module => module.Process(data));
+            _module1.AssertWasNotCalled(module => module.Process(data));
+            _module2.AssertWasNotCalled(module => module.Process(data));
         }
     }
 }
