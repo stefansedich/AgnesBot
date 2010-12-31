@@ -28,6 +28,8 @@ namespace AgnesBot.Server
             SetupContainer();
 
             IoC.Resolve<BotRunner>().Start();
+
+            Console.WriteLine("- AgnesBot Started -");
         }
 
         private static void SetupContainer()
