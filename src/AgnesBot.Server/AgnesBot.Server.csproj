@@ -83,8 +83,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BotRunner.cs" />
+    <Compile Include="Installers\ModuleInstaller.cs" />
+    <Compile Include="Installers\RavenInstaller.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Installers\Installer.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

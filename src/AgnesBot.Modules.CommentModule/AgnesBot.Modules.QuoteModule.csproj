@@ -55,7 +55,6 @@
     <Compile Include="Domain\Quote.cs" />
     <Compile Include="QuoteModule.cs" />
     <Compile Include="Domain\QuoteRepository.cs" />
-    <Compile Include="QuoteModuleInstaller.cs" />
     <Compile Include="Indexes\Quotes_ByText.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

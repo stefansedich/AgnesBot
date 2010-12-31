@@ -56,7 +56,6 @@
     <Compile Include="Data\BaseRepository.cs" />
     <Compile Include="Modules\ModuleMessageHandler.cs" />
     <Compile Include="Utils\ConfigurationManager.cs" />
-    <Compile Include="Utils\IoC.cs" />
     <Compile Include="IrcUtils\IrcClient.cs" />
     <Compile Include="Modules\BaseModule.cs" />
     <Compile Include="Modules\IModule.cs" />
@@ -66,6 +65,7 @@
     <Compile Include="IrcUtils\SendType.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="UnitOfWork\IUnitOfWorkFactory.cs" />
+    <Compile Include="Utils\IoC.cs" />
     <Compile Include="Utils\SystemTime.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
     <Compile Include="UnitOfWork\UnitOfWorkFactory.cs" />

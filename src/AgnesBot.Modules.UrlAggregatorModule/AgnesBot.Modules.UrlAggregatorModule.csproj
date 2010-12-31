@@ -47,7 +47,6 @@
     <Compile Include="Domain\Url.cs" />
     <Compile Include="UrlAggregatorModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UrlAggregatorModuleInstaller.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AgnesBot.Core\AgnesBot.Core.csproj">
