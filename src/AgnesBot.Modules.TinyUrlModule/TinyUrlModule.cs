@@ -25,10 +25,6 @@ namespace AgnesBot.Modules.TinyUrlModule
         private void ShortenUrl(IrcMessageData data, IDictionary<string, string> commandData)
         {
             string url = commandData["url"];
-
-            if (string.IsNullOrEmpty(url))
-                return;
-
             string shortenedUrl = _tinyUrlService.ShortenUrl(url);
 
             Client.SendMessage(SendType.Message, data.Channel, "TinyUrl: " + shortenedUrl);

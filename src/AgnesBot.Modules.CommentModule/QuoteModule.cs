@@ -39,10 +39,7 @@ namespace AgnesBot.Modules.QuoteModule
         private void AddQuote(IrcMessageData data, IDictionary<string, string> commandData)
         {
             string text = commandData["text"];
-
-            if (string.IsNullOrEmpty(text))
-                return;
-
+            
             UnitOfWork.Start(() => _quoteRepository.CreateQuote(new Quote
                                                                         {
                                                                             Text = text,
@@ -54,14 +51,11 @@ namespace AgnesBot.Modules.QuoteModule
 
         public void SearchQuotes(IrcMessageData data, IDictionary<string, string> commandData)
         {
-            string text = commandData["term"];
-
-            if (string.IsNullOrEmpty(text))
-                return;
+            string term = commandData["term"];
 
             UnitOfWork.Start(() =>
                                  {
-                                     var comments = _quoteRepository.SearchQuotes(text, 3);
+                                     var comments = _quoteRepository.SearchQuotes(term, 3);
                                      
                                      foreach (var comment in comments)
                                          Client.SendMessage(SendType.Message, data.Channel, string.Format("{0} on {1}", comment.Text, comment.Timestamp));
