@@ -5,6 +5,7 @@ using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.UnitOfWork;
 using AgnesBot.Core.Utils;
 using AgnesBot.Modules.QuoteModule.Domain;
+using AgnesBot.Modules.QuoteModule.Repositories;
 using Castle.Windsor;
 using NUnit.Framework;
 using Rhino.Mocks;

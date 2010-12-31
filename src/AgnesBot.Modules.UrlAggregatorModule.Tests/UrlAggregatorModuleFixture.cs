@@ -4,6 +4,7 @@ using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.UnitOfWork;
 using AgnesBot.Core.Utils;
 using AgnesBot.Modules.UrlAggregatorModule.Domain;
+using AgnesBot.Modules.UrlAggregatorModule.Repositories;
 using Castle.Windsor;
 using NUnit.Framework;
 using Rhino.Mocks;

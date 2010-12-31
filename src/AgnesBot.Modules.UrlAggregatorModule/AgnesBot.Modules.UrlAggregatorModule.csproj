@@ -43,7 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\UrlRepository.cs" />
+    <Compile Include="Repositories\IUrlRepository.cs" />
+    <Compile Include="Repositories\UrlRepository.cs" />
     <Compile Include="Domain\Url.cs" />
     <Compile Include="UrlAggregatorModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

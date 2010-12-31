@@ -5,6 +5,7 @@ using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.Modules;
 using AgnesBot.Core.UnitOfWork;
 using AgnesBot.Modules.QuoteModule.Domain;
+using AgnesBot.Modules.QuoteModule.Repositories;
 
 namespace AgnesBot.Modules.QuoteModule
 {
