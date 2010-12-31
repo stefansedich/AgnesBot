@@ -4,6 +4,7 @@ using AgnesBot.Core;
 using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.Modules;
 using AgnesBot.Core.UnitOfWork;
+using AgnesBot.Core.Utils;
 using AgnesBot.Modules.UrlAggregatorModule.Domain;
 using AgnesBot.Modules.UrlAggregatorModule.Repositories;
 

@@ -1,6 +1,6 @@
 using System;
 
-namespace AgnesBot.Core
+namespace AgnesBot.Core.Utils
 {
     public static class SystemTime
     {
