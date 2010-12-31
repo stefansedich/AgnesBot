@@ -20,7 +20,7 @@ namespace AgnesBot.Modules.UrlAggregatorModule
             AddHandler(new ModuleMessageHandler
                            {
                                Type = ReceiveType.ChannelMessage,
-                               CommandRegex = new Regex(@"https?://([-\w\.]+)+(:\d+)?(/([\w/_\.]*(\?\S+)?)?)?"),
+                               CommandRegex = new Regex(@"(?<url>https?://([-\w\.]+)+(:\d+)?(/([\w/_\.]*(\?\S+)?)?)?)"),
                                Action = AddUrl
                            });
 
@@ -45,25 +45,20 @@ namespace AgnesBot.Modules.UrlAggregatorModule
 
         private void AddUrl(IrcMessageData data, IDictionary<string, string> commandData)
         {
-            var matches = Regex.Matches(data.Message, @"(?<url>https?://([-\w\.]+)+(:\d+)?(/([\w/_\.]*(\?\S+)?)?)?)");
+            string url = commandData["url"];
+            bool nsfw = Regex.IsMatch(data.Message, "nsfw", RegexOptions.IgnoreCase);
 
             UnitOfWork.Start(() =>
                                  {
-                                     foreach (Match match in matches)
-                                     {
-                                         string url = match.Groups["url"].Value;
-                                         bool nsfw = Regex.IsMatch(data.Message, "nsfw", RegexOptions.IgnoreCase);
-                                         
-                                         if(_urlRepository.GetUrlByLink(url) != null)
-                                             continue;
+                                     if (_urlRepository.GetUrlByLink(url) != null)
+                                         return;
 
-                                         _urlRepository.SaveUrl(new Url
-                                                                    {
-                                                                        Link = url,
-                                                                        Timestamp = SystemTime.Now(),
-                                                                        Nsfw = nsfw
-                                                                    });
-                                     }
+                                     _urlRepository.SaveUrl(new Url
+                                     {
+                                         Link = url,
+                                         Timestamp = SystemTime.Now(),
+                                         Nsfw = nsfw
+                                     });                            
                                  });
         }
     }

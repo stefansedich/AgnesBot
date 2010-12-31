@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using AgnesBot.Core.IrcUtils;
 
 namespace AgnesBot.Core.Modules
@@ -28,16 +29,16 @@ namespace AgnesBot.Core.Modules
                                  if (handler.Type != data.Type)
                                      return;
 
-                                 var match = handler.CommandRegex.Match(data.Message);
+                                 var matches = handler.CommandRegex.Matches(data.Message);
+                                 
+                                 foreach (Match match in matches)
+                                 {
+                                     var commandData = handler.CommandRegex
+                                         .GetGroupNames()
+                                         .ToDictionary(name => name, name => match.Groups[name].Value);
 
-                                 if (match.Success == false)
-                                     return;
-
-                                 var commandData = handler.CommandRegex
-                                     .GetGroupNames()
-                                     .ToDictionary(name => name, name => match.Groups[name].Value);
-
-                                 handler.Action(data, commandData);
+                                     handler.Action(data, commandData);
+                                 }
                              });
         }
     }
