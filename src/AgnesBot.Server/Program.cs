@@ -11,16 +11,6 @@ namespace AgnesBot.Server
 {
     class Program
     {
-        public static AssemblyFilter ModuleAssemblyFilter
-        {
-            get
-            {
-                string moduleFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
-                return new AssemblyFilter(moduleFolder, "AgnesBot.Modules.*");
-            }
-        }
-        
         static void Main(string[] args)
         {
             Console.WriteLine("- Starting AgnesBot -");

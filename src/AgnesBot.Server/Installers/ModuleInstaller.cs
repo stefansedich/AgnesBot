@@ -22,7 +22,7 @@ namespace AgnesBot.Server.Installers
         private static void RegisterModules(IWindsorContainer container)
         {
             container.Register(
-                AllTypes.FromAssemblyInDirectory(Program.ModuleAssemblyFilter)
+                AllTypes.FromAssemblyInDirectory(ModuleUtil.ModuleAssemblyFilter)
                     .BasedOn<IModule>().WithService.FirstInterface()
                     .Where(x => x.Name.EndsWith("Service")).WithService.FirstInterface()
                     .Where(x => x.Name.EndsWith("Repository")).WithService.FirstInterface()
@@ -32,7 +32,7 @@ namespace AgnesBot.Server.Installers
         private static void ExecuteModuleInstallers(IWindsorContainer container)
         {
             container.Install(
-                FromAssembly.InDirectory(Program.ModuleAssemblyFilter)
+                FromAssembly.InDirectory(ModuleUtil.ModuleAssemblyFilter)
                 );
         }
     }

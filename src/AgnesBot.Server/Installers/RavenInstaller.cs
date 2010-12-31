@@ -1,3 +1,4 @@
+using AgnesBot.Core.Modules;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
@@ -20,9 +21,9 @@ namespace AgnesBot.Server.Installers
             CreateIndexesForModules(documentStore);
         }
 
-        private static void CreateIndexesForModules(DocumentStore documentStore)
+        private static void CreateIndexesForModules(IDocumentStore documentStore)
         {
-            var assemblies = ReflectionUtil.GetAssemblies(Program.ModuleAssemblyFilter);
+            var assemblies = ReflectionUtil.GetAssemblies(ModuleUtil.ModuleAssemblyFilter);
 
             foreach(var assembly in assemblies)
                 IndexCreation.CreateIndexes(assembly, documentStore);

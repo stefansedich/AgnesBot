@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\ModulePathUtil.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Modules\ModuleMessageHandler.cs" />
     <Compile Include="Utils\ConfigurationManager.cs" />
