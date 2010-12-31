@@ -54,11 +54,11 @@ namespace AgnesBot.Modules.UrlAggregatorModule
                                          return;
 
                                      _urlRepository.SaveUrl(new Url
-                                     {
-                                         Link = url,
-                                         Timestamp = SystemTime.Now(),
-                                         Nsfw = nsfw
-                                     });                            
+                                                                {
+                                                                    Link = url,
+                                                                    Timestamp = SystemTime.Now(),
+                                                                    Nsfw = nsfw
+                                                                });
                                  });
         }
     }
