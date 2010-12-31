@@ -1,12 +1,11 @@
 using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.Modules;
 using AgnesBot.Core.Utils;
-using AgnesBot.Server;
 using NUnit.Framework;
 using System.Collections.Generic;
 using Rhino.Mocks;
 
-namespace AgnesBot.Tests
+namespace AgnesBot.Server.Tests
 {
     [TestFixture]
     public class BotRunnerFixture

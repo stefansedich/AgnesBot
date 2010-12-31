@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgnesBot.Tests", "AgnesBot.Tests\AgnesBot.Tests.csproj", "{8C79F147-D839-44C2-868F-44FE6849C2EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgnesBot.Server.Tests", "AgnesBot.Tests\AgnesBot.Server.Tests.csproj", "{8C79F147-D839-44C2-868F-44FE6849C2EE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgnesBot.Core", "AgnesBot.Core\AgnesBot.Core.csproj", "{CE05A9C0-91A6-475A-A2F8-0137EB88EE30}"
 EndProject
