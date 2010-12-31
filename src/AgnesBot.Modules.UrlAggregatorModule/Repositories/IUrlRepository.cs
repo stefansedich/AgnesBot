@@ -7,6 +7,6 @@ namespace AgnesBot.Modules.UrlAggregatorModule.Repositories
     {
         void SaveUrl(Url url);
         IList<Url> GetAllUrls();
-        Url GetUrlByLink(string url);
+        bool UrlExists(string link);
     }
 }

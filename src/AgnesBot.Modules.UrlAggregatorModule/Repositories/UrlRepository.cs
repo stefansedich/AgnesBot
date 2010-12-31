@@ -18,11 +18,11 @@ namespace AgnesBot.Modules.UrlAggregatorModule.Repositories
                 .ToList();
         }
 
-        public Url GetUrlByLink(string url)
+        public bool UrlExists(string link)
         {
             return Session.Query<Url>()
-                .Where(x => x.Link == url)
-                .FirstOrDefault();
-        }
+                .Where(x => x.Link == link)
+                .FirstOrDefault() != null;
+        } 
     }
 }

@@ -20,7 +20,7 @@ namespace AgnesBot.Modules.UrlAggregatorModule
             AddHandler(new ModuleMessageHandler
                            {
                                Type = ReceiveType.ChannelMessage,
-                               CommandRegex = new Regex(@"(?<url>https?://([-\w\.]+)+(:\d+)?(/([\w/_\.]*(\?\S+)?)?)?)"),
+                               CommandRegex = new Regex(@"(?<link>https?://([-\w\.]+)+(:\d+)?(/([\w/_\.]*(\?\S+)?)?)?)"),
                                Action = AddUrl
                            });
 
@@ -45,17 +45,17 @@ namespace AgnesBot.Modules.UrlAggregatorModule
 
         private void AddUrl(IrcMessageData data, IDictionary<string, string> commandData)
         {
-            string url = commandData["url"];
+            string link = commandData["link"];
             bool nsfw = Regex.IsMatch(data.Message, "nsfw", RegexOptions.IgnoreCase);
 
             UnitOfWork.Start(() =>
                                  {
-                                     if (_urlRepository.GetUrlByLink(url) != null)
+                                     if (_urlRepository.UrlExists(link))
                                          return;
 
                                      _urlRepository.SaveUrl(new Url
                                                                 {
-                                                                    Link = url,
+                                                                    Link = link,
                                                                     Timestamp = SystemTime.Now(),
                                                                     Nsfw = nsfw
                                                                 });

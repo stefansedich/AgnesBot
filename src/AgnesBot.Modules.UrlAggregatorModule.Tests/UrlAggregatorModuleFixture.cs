@@ -106,10 +106,9 @@ namespace AgnesBot.Modules.UrlAggregatorModule.Tests
 
             var data = new IrcMessageData {Type = ReceiveType.ChannelMessage, Message = URL};
 
-            _urlRepository.Stub(repository => repository.GetUrlByLink(URL))
-                .Return(new Url());
-
-
+            _urlRepository.Stub(repository => repository.UrlExists(URL))
+                .Return(true);
+            
             // Act
             _module.Process(data);
 
