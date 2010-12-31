@@ -25,13 +25,13 @@ namespace AgnesBot.Server
         {
             Console.WriteLine("- Starting AgnesBot -");
 
-            using(var container = SetupContainer())
-                container.Resolve<BotRunner>().Start();    
+            SetupContainer();
+            IoC.Resolve<BotRunner>().Start();    
             
             Console.WriteLine("- AgnesBot Started -");
         }
 
-        private static IWindsorContainer SetupContainer()
+        private static void SetupContainer()
         {
             var container = new WindsorContainer();
 
@@ -39,8 +39,6 @@ namespace AgnesBot.Server
             container.Install(FromAssembly.This());
 
             IoC.Initialize(container);
-
-            return container;
         }
     }
 }
