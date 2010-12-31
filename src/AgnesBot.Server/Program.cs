@@ -25,21 +25,22 @@ namespace AgnesBot.Server
         {
             Console.WriteLine("- Starting AgnesBot -");
 
-            SetupContainer();
-
-            IoC.Resolve<BotRunner>().Start();
-
+            using(var container = SetupContainer())
+                container.Resolve<BotRunner>().Start();    
+            
             Console.WriteLine("- AgnesBot Started -");
         }
 
-        private static void SetupContainer()
+        private static IWindsorContainer SetupContainer()
         {
             var container = new WindsorContainer();
 
             container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel, false));
             container.Install(FromAssembly.This());
-         
+
             IoC.Initialize(container);
+
+            return container;
         }
     }
 }
