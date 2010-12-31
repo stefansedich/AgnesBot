@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using AgnesBot.Core.Data;
+using AgnesBot.Core.Repositories;
 using AgnesBot.Modules.QuoteModule.Domain;
 using AgnesBot.Modules.QuoteModule.Indexes;
 
