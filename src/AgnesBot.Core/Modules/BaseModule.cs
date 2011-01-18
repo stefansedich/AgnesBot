@@ -27,16 +27,14 @@ namespace AgnesBot.Core.Modules
         public void Process(IrcMessageData data)
         {
             _handlers.AsParallel()
+                .Where(handler => handler.Type == data.Type)
                 .ForAll(handler =>
-                             {
-                                 if (handler.Type != data.Type)
-                                     return;
+                            {
+                                var matches = handler.CommandRegex.Matches(data.Message);
 
-                                 var matches = handler.CommandRegex.Matches(data.Message);
-                                 
-                                 foreach (Match match in matches)
-                                     ExecuteHandlerMethod(data, handler, match);
-                             });
+                                foreach (Match match in matches)
+                                    ExecuteHandlerMethod(data, handler, match);
+                            });
         }
 
         // TODO: No error checking at the moment, needs work to stop people doing silly things.
