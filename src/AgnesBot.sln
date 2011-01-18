@@ -21,6 +21,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgnesBot.Modules.UrlAggrega
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgnesBot.Modules.UrlAggregatorModule.Tests", "AgnesBot.Modules.UrlAggregatorModule.Tests\AgnesBot.Modules.UrlAggregatorModule.Tests.csproj", "{163F20C8-7A96-4255-9B89-18B9968FA311}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgnesBot.Modules.DateModule", "AgnesBot.Modules.DateModule\AgnesBot.Modules.DateModule.csproj", "{2147B77A-5EC7-4827-A09C-E187248F9A40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgnesBot.Modules.DateModule.Tests", "AgnesBot.Modules.DateModule.Tests\AgnesBot.Modules.DateModule.Tests.csproj", "{5509421E-8D40-4783-9898-076C95BE2B9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,14 @@ Global
 		{163F20C8-7A96-4255-9B89-18B9968FA311}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{163F20C8-7A96-4255-9B89-18B9968FA311}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{163F20C8-7A96-4255-9B89-18B9968FA311}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2147B77A-5EC7-4827-A09C-E187248F9A40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2147B77A-5EC7-4827-A09C-E187248F9A40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2147B77A-5EC7-4827-A09C-E187248F9A40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2147B77A-5EC7-4827-A09C-E187248F9A40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5509421E-8D40-4783-9898-076C95BE2B9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5509421E-8D40-4783-9898-076C95BE2B9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5509421E-8D40-4783-9898-076C95BE2B9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5509421E-8D40-4783-9898-076C95BE2B9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,5 +86,7 @@ Global
 		{22914356-0706-4E84-BB4D-C37AC51E3B41} = {3EE894D3-3394-43CE-B774-B6E9AF939A01}
 		{EC36873E-9434-446E-835E-F12A9A3213E9} = {3EE894D3-3394-43CE-B774-B6E9AF939A01}
 		{163F20C8-7A96-4255-9B89-18B9968FA311} = {3EE894D3-3394-43CE-B774-B6E9AF939A01}
+		{2147B77A-5EC7-4827-A09C-E187248F9A40} = {3EE894D3-3394-43CE-B774-B6E9AF939A01}
+		{5509421E-8D40-4783-9898-076C95BE2B9A} = {3EE894D3-3394-43CE-B774-B6E9AF939A01}
 	EndGlobalSection
 EndGlobal
