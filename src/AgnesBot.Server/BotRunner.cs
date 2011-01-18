@@ -45,10 +45,7 @@ namespace AgnesBot.Server
         {
             var data = _client.MessageParser(line);
 
-            if (string.IsNullOrEmpty(data.Message))
-                return;
-
-            if (_client.IsMe(data.Nickname))
+            if (string.IsNullOrEmpty(data.Message) || _client.IsMe(data.Nickname))
                 return;
 
             _modules.AsParallel()

@@ -1,5 +1,4 @@
 ﻿using System;
-using AgnesBot.Core;
 using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.UnitOfWork;
 using AgnesBot.Core.Utils;

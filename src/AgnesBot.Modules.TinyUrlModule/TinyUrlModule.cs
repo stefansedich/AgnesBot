@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.Modules;
 using AgnesBot.Modules.TinyUrlModule.Services;
