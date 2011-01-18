@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using AgnesBot.Core.IrcUtils;
 
 namespace AgnesBot.Core.Modules
@@ -9,6 +7,6 @@ namespace AgnesBot.Core.Modules
     {
         public ReceiveType Type { get; set; }
         public Regex CommandRegex { get; set; }
-        public Action<IrcMessageData, IDictionary<string, string>> Action { get; set; }
+        public string Method { get; set; }
     }
 }

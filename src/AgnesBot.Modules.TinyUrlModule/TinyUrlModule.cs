@@ -18,13 +18,12 @@ namespace AgnesBot.Modules.TinyUrlModule
                            {
                                Type = ReceiveType.ChannelMessage,
                                CommandRegex = new Regex("^!tinyurl (?<url>.+)"),
-                               Action = ShortenUrl
+                               Method = "ShortenUrl"
                            });
         }
 
-        private void ShortenUrl(IrcMessageData data, IDictionary<string, string> commandData)
+        protected void ShortenUrl(IrcMessageData data, string url)
         {
-            string url = commandData["url"];
             string shortenedUrl = _tinyUrlService.ShortenUrl(url);
 
             Client.SendMessage(SendType.Message, data.Channel, "TinyUrl: " + shortenedUrl);

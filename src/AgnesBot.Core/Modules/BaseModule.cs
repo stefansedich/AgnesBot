@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using AgnesBot.Core.IrcUtils;
 
@@ -32,14 +35,33 @@ namespace AgnesBot.Core.Modules
                                  var matches = handler.CommandRegex.Matches(data.Message);
                                  
                                  foreach (Match match in matches)
-                                 {
-                                     var commandData = handler.CommandRegex
-                                         .GetGroupNames()
-                                         .ToDictionary(name => name, name => match.Groups[name].Value);
-
-                                     handler.Action(data, commandData);
-                                 }
+                                     ExecuteHandlerMethod(data, handler, match);
                              });
+        }
+
+        // TODO: No error checking at the moment, needs work to stop people doing silly things.
+        private void ExecuteHandlerMethod(IrcMessageData data, ModuleMessageHandler handler, Match match)
+        {
+            var method = GetType().GetMethod(handler.Method, BindingFlags.NonPublic | BindingFlags.Instance);
+
+            if(method == null)
+                return;
+
+            var arguments = method.GetParameters()
+                .Select(parameter =>
+                            {
+                                if (parameter.Position == 0)
+                                    return data;
+
+                                if (match.Groups[parameter.Name] == null)
+                                    return Activator.CreateInstance(parameter.ParameterType);
+
+                                return TypeDescriptor.GetConverter(parameter.ParameterType)
+                                    .ConvertFromString(match.Groups[parameter.Name].Value);
+                            })
+                .ToArray();
+
+            method.Invoke(this, arguments);
         }
     }
 }

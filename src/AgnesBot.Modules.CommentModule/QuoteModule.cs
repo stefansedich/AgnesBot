@@ -22,7 +22,7 @@ namespace AgnesBot.Modules.QuoteModule
                     {
                         Type = ReceiveType.ChannelMessage,
                         CommandRegex = new Regex("^!quotes add (?<text>.+)$"),
-                        Action = AddQuote
+                        Method = "AddQuote"
                     }
                 );
 
@@ -31,15 +31,13 @@ namespace AgnesBot.Modules.QuoteModule
                     {
                         Type = ReceiveType.ChannelMessage,
                         CommandRegex = new Regex("^!quotes find (?<term>.+)$"),
-                        Action = SearchQuotes
+                        Method = "SearchQuotes"
                     }
                 );
         }
         
-        private void AddQuote(IrcMessageData data, IDictionary<string, string> commandData)
+        protected void AddQuote(IrcMessageData data, string text)
         {
-            string text = commandData["text"];
-            
             UnitOfWork.Start(() => _quoteRepository.CreateQuote(new Quote
                                                                         {
                                                                             Text = text,
@@ -49,10 +47,8 @@ namespace AgnesBot.Modules.QuoteModule
             Client.SendMessage(SendType.Message, data.Channel, "Quote has been added.");
         }
 
-        public void SearchQuotes(IrcMessageData data, IDictionary<string, string> commandData)
+        protected void SearchQuotes(IrcMessageData data, string term)
         {
-            string term = commandData["term"];
-
             UnitOfWork.Start(() =>
                                  {
                                      var comments = _quoteRepository.SearchQuotes(term, 3);
