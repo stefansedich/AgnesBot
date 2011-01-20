@@ -16,7 +16,7 @@ RavenDB is used as a data store and 3rd party modules are able to hook directly 
 
 Future plans are to add modules for Teamcity/CC.NET and anything else I find useful.
 
-###Why does git show that all of my files are modified?
+##Why does git show that all of my files are modified?
 
 AgnesBot is built by Windows users, so all of the text files have CRLF line 
 endings. These line endings are stored as-is in git (which means we all have 
