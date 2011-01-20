@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using AgnesBot.Core.IrcUtils;
 
 namespace AgnesBot.Core.Modules

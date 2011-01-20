@@ -1,4 +1,4 @@
-﻿namespace AgnesBot.Core.IrcUtils
+namespace AgnesBot.Core.IrcUtils
 {
     public enum ReceiveType
     {

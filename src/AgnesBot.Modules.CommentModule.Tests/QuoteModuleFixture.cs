@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using AgnesBot.Core.IrcUtils;
 using AgnesBot.Core.UnitOfWork;

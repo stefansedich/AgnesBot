@@ -1,4 +1,4 @@
-﻿using AgnesBot.Core.IrcUtils;
+using AgnesBot.Core.IrcUtils;
 using AgnesBot.Modules.TinyUrlModule.Services;
 using NUnit.Framework;
 using Rhino.Mocks;

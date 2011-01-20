@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using AgnesBot.Modules.QuoteModule.Domain;
 
 namespace AgnesBot.Modules.QuoteModule.Repositories

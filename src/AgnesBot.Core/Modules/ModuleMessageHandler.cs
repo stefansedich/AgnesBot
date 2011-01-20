@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 using AgnesBot.Core.IrcUtils;
 
 namespace AgnesBot.Core.Modules
