@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{215AFE27-4EB4-40D1-A261-C8E0350697C6}</ProjectGuid>
+    <ProjectGuid>{6587A7B5-DAE1-4BB5-B3C6-EB17F01A35CC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AgnesBot.Modules.QuoteModule.Tests</RootNamespace>
-    <AssemblyName>AgnesBot.Modules.QuoteModule.Tests</AssemblyName>
+    <RootNamespace>AgnesBot.Modules.GitHubModule.Tests</RootNamespace>
+    <AssemblyName>AgnesBot.Modules.GitHubModule.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,14 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=2.5.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Castle.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Castle.Windsor, Version=2.5.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Castle.Windsor.dll</HintPath>
-    </Reference>
+    <Reference Include="Castle.Core, Version=2.5.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL" />
     <Reference Include="nunit.framework, Version=2.5.4.10098, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\nunit.framework.dll</HintPath>
@@ -55,17 +48,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="QuoteModuleFixture.cs" />
+    <Compile Include="GitHubSearchModuleFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\GitHubServiceFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AgnesBot.Core\AgnesBot.Core.csproj">
       <Project>{CE05A9C0-91A6-475A-A2F8-0137EB88EE30}</Project>
       <Name>AgnesBot.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AgnesBot.Modules.CommentModule\AgnesBot.Modules.QuoteModule.csproj">
-      <Project>{22914356-0706-4E84-BB4D-C37AC51E3B41}</Project>
-      <Name>AgnesBot.Modules.QuoteModule</Name>
+    <ProjectReference Include="..\AgnesBot.Modules.GitHubModule\AgnesBot.Modules.GitHubModule.csproj">
+      <Project>{C12357FB-93A0-4BFA-A76D-37E4E7D77632}</Project>
+      <Name>AgnesBot.Modules.GitHubModule</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
