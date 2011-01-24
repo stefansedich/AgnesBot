@@ -3,7 +3,7 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Raven.Client;
-using Raven.Client.Document;
+using Raven.Client.Client;
 using Raven.Client.Indexes;
 using ReflectionUtil = Castle.Core.Internal.ReflectionUtil;
 
@@ -13,7 +13,7 @@ namespace AgnesBot.Server.Installers
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            var documentStore = new DocumentStore { ConnectionStringName = "RavenDb" };
+            var documentStore = new EmbeddableDocumentStore { DataDirectory = "data" };
             documentStore.Initialize();
 
             container.Register(Component.For<IDocumentStore>().Instance(documentStore));
