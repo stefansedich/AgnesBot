@@ -63,7 +63,7 @@
       <Project>{CE05A9C0-91A6-475A-A2F8-0137EB88EE30}</Project>
       <Name>AgnesBot.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AgnesBot.Modules.CommentModule\AgnesBot.Modules.QuoteModule.csproj">
+    <ProjectReference Include="..\AgnesBot.Modules.QuoteModule\AgnesBot.Modules.QuoteModule.csproj">
       <Project>{22914356-0706-4E84-BB4D-C37AC51E3B41}</Project>
       <Name>AgnesBot.Modules.QuoteModule</Name>
     </ProjectReference>
